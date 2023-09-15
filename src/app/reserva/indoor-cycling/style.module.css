@@ -1,0 +1,5 @@
+.clipCard {
+  -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0);
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0);
+  background: lightblue;
+}

@@ -1,0 +1,27 @@
+.spotButton {
+  border-radius: 100px;
+}
+
+.spotButtonAvailable {
+  background-color: white;
+  border: 3px solid #F7D26E;
+}
+
+.spotButtonReserved {
+  background-color: #F7D26E;
+  opacity: .9;
+}
+
+.spotButtonSelected, .spotButtonAvailable:hover {
+  background-color: #232321;
+  border: none;
+  color: white;
+}
+
+.spotButtonAvailable:hover {
+  opacity: .65;
+}
+
+.spotButtonSelected {
+  opacity: .85;
+}

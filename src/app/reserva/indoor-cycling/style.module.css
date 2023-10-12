@@ -1,5 +1,18 @@
 .clipCard {
-  -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0);
-  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0);
-  background: lightblue;
+  /* -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0);
+  clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 20%, 88% 0); */
+}
+
+.directionalBtn {
+  background-color: #F7D26E;
+  color: #232321;
+}
+
+.bgLight {
+  border: 2px solid #F7D26E;
+}
+
+.bgLight:hover {
+  background-color: #232321;
+  color: white;
 }

@@ -2,12 +2,15 @@ import React from 'react'
 
 import {
   Navbar,
+  NavbarBrand,
   NavbarContent,
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
 } from '@nextui-org/navbar'
+import Image from 'next/image'
 import {Link} from '@nextui-org/link'
+import styles from './style.module.css'
 
 export default function App() {
   const menuItems = [
@@ -24,17 +27,18 @@ export default function App() {
   ];
 
   return (
-    <Navbar disableAnimation isBordered>
+    <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
+      <NavbarBrand>
+        <Image
+          src="/logo.png"
+          width={200}
+          height={21}
+          alt="Zeal Studio Logo"
+        />
+      </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarMenuToggle />
+        <NavbarMenuToggle className={styles.navbarMenuToggle} />
       </NavbarContent>
-
-      {/* <NavbarContent className="sm:hidden pr-3" justify="center">
-        <NavbarBrand>
-          <p className="font-bold text-inherit">ACME</p>
-        </NavbarBrand>
-      </NavbarContent> */}
-
       <NavbarMenu>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

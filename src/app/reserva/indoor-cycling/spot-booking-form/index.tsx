@@ -3,21 +3,25 @@
 import {useState} from 'react'
 import Spot, { SpotStatus, DummySpot } from '@/app/components/spot'
 import classNames from 'classnames';
-import { IClassInfo } from '@/app/types';
+import { IClassInfo, IClass } from '@/app/types';
 
+interface IClassData {
+  seats: IClassInfo[]
+  classInfo: IClass
+}
 interface Props {
-  classInfo: IClassInfo[]
+  data: IClassData
 }
 
 export default function SpotBookingForm(props: Props) {
-  console.log(props)
+  const {  seats } = props.data
 
   const seatsMap = new Map()
   for (let i = 1; i <= 27; i++) {
     seatsMap.set(i, SpotStatus.AVAILABLE)
   }
 
-  props.classInfo.forEach((item) => {
+  seats.forEach((item) => {
     seatsMap.set(item.seat, SpotStatus.RESERVED)
   })
   

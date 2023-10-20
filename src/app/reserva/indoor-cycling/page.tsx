@@ -12,22 +12,6 @@ export default function IndoorCycling() {
   const [timeframe, setTimeframe] = useState(0)
   const [classes, setClasses] = useState<IClassSorted>({})
 
-  useEffect(() => {
-    const fetchClasses = async () => {
-      const response = await fetch('/api/indoor-cycling/horarios')
-      const data = await response.json()
-      console.log(data.horarios)
-      if (Array.isArray(data?.horarios?.body)) {
-        const day = (item: IClass) => DateTime.fromISO(item.date).toFormat('dd')
-        const result = _.groupBy(data.horarios.body, day)
-
-        setClasses(result)
-      }
-    };
-
-    fetchClasses();
-  }, [])
-
   const firstDayDate = DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
   const secondDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 1 }).setLocale('es')
   const thirdDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 2 }).setLocale('es')
@@ -37,6 +21,24 @@ export default function IndoorCycling() {
   const seventhDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 6 }).setLocale('es')
 
   const weekDays = [firstDayDate, secondDayDate, thirdDayDate, fourthDayDate, fifthDayDate, sixthDayDate, seventhDayDate]
+
+  useEffect(() => {
+    const fetchClasses = async () => {
+      const startDate = firstDayDate.toUTC().toISO()
+      const endDate = seventhDayDate.toUTC().toISO()
+      const response = await fetch(`/api/indoor-cycling/horarios?start=${startDate}&end=${endDate}`)
+      const data = await response.json()
+
+      if (Array.isArray(data?.horarios)) {
+        const day = (item: IClass) => DateTime.fromISO(item.date).toFormat('dd')
+        const result = _.groupBy(data.horarios, day)
+        console.log(result)
+        setClasses(result)
+      }
+    };
+
+    fetchClasses();
+  }, [timeframe])
 
   const firstDay = <p className='uppercase text-sm md:text-base'>{firstDayDate.toFormat('EEE dd MMM')}</p>
   const secondDay = <p className='uppercase text-sm md:text-base'>{secondDayDate.toFormat('EEE dd MMM')}</p>

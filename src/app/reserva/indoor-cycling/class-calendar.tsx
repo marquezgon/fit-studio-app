@@ -10,8 +10,8 @@ interface Props {
 }
 
 export default function ClassCalendar(props: Props) {
-  const classKeys = Object.keys(props.classes)
-  console.log(classKeys)
+  // const classKeys = Object.keys(props.classes)
+
   const renderClasses = props.dates.map((item: DateTime) => {
     return (
       <div key={item.toISO()}>

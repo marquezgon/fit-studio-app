@@ -51,7 +51,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new NextResponse(JSON.stringify({ answer: "Success" }), {
       status: response['$metadata'].httpStatusCode,
     });
-  } catch (err) {
+  } catch (err: any) {
       console.log(err)
       // const headers = req.headers;
       return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })

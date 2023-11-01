@@ -28,7 +28,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return new NextResponse(JSON.stringify({ answer: "Success" }), {
       status: response['$metadata'].httpStatusCode,
     });
-  } catch (err) {
+  } catch (err: any) {
       return new NextResponse(JSON.stringify({ error: err.toString()}), {
         status: err['$metadata'].httpStatusCode
       });

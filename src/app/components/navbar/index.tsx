@@ -13,6 +13,7 @@ import Image from 'next/image'
 import {useDisclosure} from '@nextui-org/react'
 import SignInModal from '@/app/components/signin-modal'
 import SignUpModal from '@/app/components/signup-modal'
+import SelectPackageModal from '@/app/components/select-package-modal'
 import ConfirmCodeModal from '@/app/components/confirm-code-modal'
 import {Link} from '@nextui-org/link'
 import {useAppStore} from '@/app/store'
@@ -74,6 +75,7 @@ export default function App() {
       {modal === ModalType.SIGN_IN && <SignInModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.CONFIRM_CODE && <ConfirmCodeModal isOpen={isOpen} onOpenChange={onOpenChange} />}
+      {modal === ModalType.SELECT_PACKAGE && <SelectPackageModal isOpen={isOpen} onOpenChange={onOpenChange} />}
     </Navbar>
   );
 }

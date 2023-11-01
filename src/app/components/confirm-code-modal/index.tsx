@@ -34,7 +34,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
       if (response.ok) {
         toggleModal(ModalType.SELECT_PACKAGE)
       } else {
-        setError(errorMessages[jsonRes.error])
+        setError(errorMessages[jsonRes.error as string])
       }
     } catch(e) {
       // console.log(e)

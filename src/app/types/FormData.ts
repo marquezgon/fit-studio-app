@@ -8,9 +8,15 @@ export interface ISignUpForm {
   day: string
   shoeSize: string
   email: string
+  phoneNumber: string
 }
 
 export interface ISignInForm {
   phoneNumber: string
   password: string
+}
+
+export interface IConfirmationCodeForm {
+  phoneNumber: string
+  code: number
 }

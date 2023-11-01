@@ -1,5 +1,6 @@
-import React from 'react'
+'use client'
 
+import React from 'react'
 import {
   Navbar,
   NavbarBrand,
@@ -9,8 +10,14 @@ import {
   NavbarMenuToggle,
 } from '@nextui-org/navbar'
 import Image from 'next/image'
+import {useDisclosure} from '@nextui-org/react'
+import SignInModal from '@/app/components/signin-modal'
+import SignUpModal from '@/app/components/signup-modal'
+import ConfirmCodeModal from '@/app/components/confirm-code-modal'
 import {Link} from '@nextui-org/link'
+import {useAppStore} from '@/app/store'
 import styles from './style.module.css'
+import {ModalType} from '@/app/types'
 
 export default function App() {
   const menuItems = [
@@ -25,6 +32,15 @@ export default function App() {
     "Help & Feedback",
     "Log Out",
   ];
+
+  const {isOpen, onOpen, onOpenChange} = useDisclosure()
+  const {modal} = useAppStore()
+
+  React.useEffect(() => {
+    if (modal !== null) {
+      onOpen()
+    }
+  }, [modal])
 
   return (
     <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
@@ -55,6 +71,9 @@ export default function App() {
           </NavbarMenuItem>
         ))}
       </NavbarMenu>
+      {modal === ModalType.SIGN_IN && <SignInModal isOpen={isOpen} onOpenChange={onOpenChange} />}
+      {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}
+      {modal === ModalType.CONFIRM_CODE && <ConfirmCodeModal isOpen={isOpen} onOpenChange={onOpenChange} />}
     </Navbar>
   );
 }

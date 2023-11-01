@@ -2,53 +2,49 @@
 'use client'
 
 import React from 'react'
-import {Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure, Input, Select, SelectItem} from '@nextui-org/react'
+import {Modal, ModalContent, ModalHeader, ModalBody, Button} from '@nextui-org/react'
 import {Formik, Form, Field, FormikProps} from 'formik'
 import * as Yup from 'yup'
-import {InputField} from '../fields'
-import {PhoneInput} from 'react-international-phone'
-import {months, days} from '@/app/utils'
+import {InputField, PhoneField} from '../fields'
 import 'react-international-phone/style.css'
-import {ISignInForm} from '@/app/types'
+import {ISignInForm, ModalProps} from '@/app/types'
 
 const SigninSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
   password: Yup.string().required('Campo requerido'),
 });
 
-const shoeSizes = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+export default function SignInModal(props: ModalProps) {
+  const handleSubmit = async (values: ISignInForm, actions: any) => {
+    console.log(values)
+    // try {
+    //   const response = await fetch(`/api/sign-in`, {
+    //     method: 'POST',
+    //     body: JSON.stringify(values),
+    //     headers: {
+    //       'Accept': 'application/json',
+    //       'Content-Type': 'application/json'
+    //     },
+    //   })
+    //   if (response.ok) {
 
-export default function SignInModal() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure()
-
-  const handleSubmit = async (values: ISignInForm, actions) => {
-    try {
-      const response = await fetch(`/api/sign-in`, {
-        method: 'POST',
-        body: JSON.stringify(values),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      })
-      if (response.ok) {
-
-      }
-    } catch(e) {
-      console.log(e)
-    } finally {
-      actions.setSubmitting(false);
-    }
+    //   }
+    // } catch(e) {
+    //   console.log(e)
+    // } finally {
+    //   actions.setSubmitting(false);
+    // }
   }
 
   return (
     <Modal 
-      isOpen={isOpen} 
-      onOpenChange={onOpenChange}
+      isOpen={props.isOpen} 
+      onOpenChange={props.onOpenChange}
       placement="top-center"
+      isDismissable={false}
     >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col gap-1 justify-center items-center">
               <img
@@ -61,8 +57,8 @@ export default function SignInModal() {
             <ModalBody>
               <Formik
                 initialValues={{
-                  password: 'manchi89',
-                  phoneNumber: '+523313186671',
+                  password: '',
+                  phoneNumber: '',
                 }}
                 validationSchema={SigninSchema}
                 onSubmit={handleSubmit}
@@ -71,7 +67,7 @@ export default function SignInModal() {
                   <Form>
                     {/* <Field name="email" component={InputField} size="sm" /> */}
                     <div className='py-2'>
-                      <PhoneInput defaultCountry='mx' className='w-full' />
+                    <PhoneField />
                     </div>
                     <div className='py-2'>
                       <Field name="password" type="password" placeholder="Contraseña" label="Password" component={InputField} />

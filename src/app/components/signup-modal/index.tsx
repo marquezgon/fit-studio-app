@@ -2,37 +2,30 @@
 'use client'
 
 import React from 'react'
-import {Modal, ModalContent, ModalHeader, ModalBody, Button, useDisclosure, Input, Select, SelectItem} from '@nextui-org/react'
+import {Modal, ModalContent, ModalHeader, ModalBody, Button, Select, SelectItem} from '@nextui-org/react'
 import {Formik, Form, Field, FormikProps} from 'formik'
 import * as Yup from 'yup'
 import {InputField, PhoneField} from '../fields'
 import {months, days} from '@/app/utils'
+import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
-import {ISignUpForm} from '@/app/types'
+import {ISignUpForm, ModalProps, ModalType} from '@/app/types'
 
 const SignupSchema = Yup.object().shape({
-  email: Yup.string()
-    .required('Campo requerido').email('Email inválido'),
-  firstName: Yup.string()
-    .required('Campo requerido'),
-  lastName: Yup.string()
-    .required('Campo requerido'),
-    shoeSize: Yup.string()
-    .required('Campo requerido'),
-  hasOwnShoes: Yup.string()
-    .required()
-    .oneOf(["si", "no"]),
+  phoneNumber: Yup.string().required('Campo requerido'),
+  email: Yup.string().required('Campo requerido').email('Email inválido'),
+  firstName: Yup.string().required('Campo requerido'),
+  lastName: Yup.string().required('Campo requerido'),
+  shoeSize: Yup.string().required('Campo requerido'),
+  hasOwnShoes: Yup.string().required().oneOf(["si", "no"]),
   password: Yup.string().required('Campo requerido'),
-  confirmPassword: Yup.string()
-    .required('Campo requerido')
-    .oneOf([Yup.ref('password')], 'Contraseñas no coinciden')
+  confirmPassword: Yup.string().required('Campo requerido').oneOf([Yup.ref('password')], 'Contraseñas no coinciden')
 });
 
 const shoeSizes = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
 
-export default function SignUpModal() {
-  const {isOpen, onOpen, onOpenChange} = useDisclosure()
-
+export default function SignUpModal(props: ModalProps) {
+  const {toggleModal} = useAppStore()
   const handleSubmit = async (values: ISignUpForm, actions) => {
     try {
       const response = await fetch(`/api/sign-up`, {
@@ -44,7 +37,7 @@ export default function SignUpModal() {
         },
       })
       if (response.ok) {
-
+        toggleModal(ModalType.CONFIRM_CODE)
       }
     } catch(e) {
       console.log(e)
@@ -55,9 +48,10 @@ export default function SignUpModal() {
 
   return (
     <Modal 
-      isOpen={true} 
-      onOpenChange={onOpenChange}
+      isOpen={props.isOpen}
+      onOpenChange={props.onOpenChange}
       placement="top-center"
+      isDismissable={false}
     >
       <ModalContent>
         {(onClose) => (
@@ -74,6 +68,7 @@ export default function SignUpModal() {
             <ModalBody>
               <Formik
                 initialValues={{
+                  phoneNumber: '',
                   firstName: 'Gonzalo',
                   lastName: 'Marquez',
                   password: 'manchi89',

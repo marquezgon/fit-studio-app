@@ -1,10 +1,11 @@
 import {Input} from '@nextui-org/react'
+import {FieldProps} from 'formik';
 
 export default function InputField({
-  field, // { name, value, onChange, onBlur }
-  form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+  field,
+  form: { touched, errors },
   ...props
-}) {
+}: FieldProps) {
 
   const isInvalid = touched[field.name] && errors[field.name]
 
@@ -12,7 +13,7 @@ export default function InputField({
     <div>
       <Input
         variant="bordered"
-        isInvalid={isInvalid}
+        isInvalid={isInvalid as boolean}
         color={isInvalid ? "danger" : "default"}
         errorMessage={isInvalid && `${errors[field.name]}`}
         {...field} {...props}

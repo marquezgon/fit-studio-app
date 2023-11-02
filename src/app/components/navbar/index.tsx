@@ -22,16 +22,9 @@ import {ModalType} from '@/app/types'
 
 export default function App() {
   const menuItems = [
-    "Profile",
-    "Dashboard",
-    "Activity",
-    "Analytics",
-    "System",
-    "Deployments",
-    "My Settings",
-    "Team Settings",
-    "Help & Feedback",
-    "Log Out",
+    "Clases",
+    "Iniciar Sesión",
+    "Registrarse",
   ];
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure()
@@ -57,20 +50,36 @@ export default function App() {
         <NavbarMenuToggle className={styles.navbarMenuToggle} />
       </NavbarContent>
       <NavbarMenu>
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              className="w-full"
-              color={
-                index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-              }
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='/reserva'
+            size="lg"
+          >
+            Clases
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            onClick={() => alert()}
+            size="lg"
+          >
+            Iniciar Sesión
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            onClick={() => alert()}
+            size="lg"
+          >
+            Registrarse
+          </Link>
+        </NavbarMenuItem>
       </NavbarMenu>
       {modal === ModalType.SIGN_IN && <SignInModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}

@@ -3,10 +3,25 @@
 
 import React from 'react'
 import {Modal, ModalContent, ModalHeader, ModalBody, Link} from '@nextui-org/react'
+import {usePathname} from 'next/navigation'; 
 import 'react-international-phone/style.css'
-import {ModalProps} from '@/app/types'
+import {IPackage, ModalProps} from '@/app/types'
 
 export default function SelectPackageModal(props: ModalProps) {
+  const [packages, setPackages] = React.useState<IPackage[]>([])
+  const pathname = usePathname() 
+
+  React.useEffect(() => {
+    const fetchPackages = async () => {
+      const response = await fetch(`/api/package/list`)
+      const data = await response.json()
+
+      setPackages(data?.packages)
+    };
+
+    fetchPackages()
+  }, [])
+
   return (
     <Modal 
       isOpen={props.isOpen} 
@@ -28,62 +43,15 @@ export default function SelectPackageModal(props: ModalProps) {
             </ModalHeader>
             <ModalBody>
               <div className="grid grid-cols-1">
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                    <p className='text-lg'>FIRST RIDE</p>
-                    <p className='text-lg'>$160.00</p>
-                    <p className='text-sm'>* 7 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                    <p className='text-lg'>1 CLASS PACK</p>
-                    <p className='text-lg'>$200.00</p>
-                    <p className='text-sm'>* 7 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                    <p className='text-lg'>5 CLASSES PACK</p>
-                    <p className='text-lg'>$1,000.00</p>
-                    <p className='text-sm'>* 30 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                  <p className='text-lg'>10 CLASSES PACK</p>
-                    <p className='text-lg'>$1,700.00</p>
-                    <p className='text-sm'>* 60 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                  <p className='text-lg'>25 CLASSES PACK</p>
-                    <p className='text-lg'>$3,000.00</p>
-                    <p className='text-sm'>* 60 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                  <p className='text-lg'>25 CLASSES PACK</p>
-                    <p className='text-lg'>$3,500.00</p>
-                    <p className='text-sm'>* 90 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                  <p className='text-lg'>50 CLASSES PACK</p>
-                    <p className='text-lg'>$5,500.00</p>
-                    <p className='text-sm'>* 365 días de vigencia</p>
-                  </div>
-                </Link>
-                <Link href="https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40">
-                  <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-                  <p className='text-lg'>70 CLASSES PACK</p>
-                    <p className='text-lg'>$7,250.00</p>
-                    <p className='text-sm'>* 365 días de vigencia</p>
-                  </div>
-                </Link>
+                {packages.map((pack) => (
+                  <Link key={pack.id} href={`https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40&?client_reference_id=${pack.id}`}>
+                    <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
+                      <p className='text-lg uppercase'>{pack.name}</p>
+                      <p className='text-lg'>${pack.price}.00</p>
+                      <p className='text-sm'>* {pack.expires_in} días de vigencia</p>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </ModalBody>
           </>

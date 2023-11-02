@@ -1,5 +1,5 @@
 import {Input} from '@nextui-org/react'
-import {FieldProps} from 'formik';
+import {FieldProps} from 'formik'
 
 export default function InputField({
   field,

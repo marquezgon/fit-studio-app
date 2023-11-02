@@ -1,5 +1,5 @@
 import {PhoneInput} from 'react-international-phone'
-import {Field} from 'formik'
+import {Field, FieldProps} from 'formik'
 import styles from './style.module.css'
 
 export default function PhoneField(props: any) {
@@ -7,7 +7,7 @@ export default function PhoneField(props: any) {
     <Field
       name="phoneNumber"
     >
-      {({ field, form: { touched, errors, setFieldValue, values } }) => (
+      {({ field, form: { setFieldValue, values } }: FieldProps) => (
         <div>
           <PhoneInput
             defaultCountry='mx'

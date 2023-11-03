@@ -64,7 +64,7 @@ export default function SignInModal(props: ModalProps) {
                 alt="Zeal Studio Logo"
                 width={200}
               />
-              <h3 className='text-xl font-[100] pt-6'>HOLD THE VISION, TRUST THE PROCESS</h3>
+              <h3 className='text-xl font-[100] pt-6 uppercase'>Iniciar Sesión</h3>
             </ModalHeader>
             <ModalBody>
               <Formik

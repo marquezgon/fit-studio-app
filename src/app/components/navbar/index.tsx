@@ -15,7 +15,7 @@ import SignInModal from '@/app/components/signin-modal'
 import SignUpModal from '@/app/components/signup-modal'
 import SelectPackageModal from '@/app/components/select-package-modal'
 import ConfirmCodeModal from '@/app/components/confirm-code-modal'
-import { CognitoIdentityProviderClient, GetUserCommand } from "@aws-sdk/client-cognito-identity-provider";
+import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
 import {Link} from '@nextui-org/link'
 import {useAppStore} from '@/app/store'
 import styles from './style.module.css'
@@ -23,7 +23,7 @@ import {ModalType} from '@/app/types'
 
 export default function App() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure()
-  const {modal, user, setUser} = useAppStore()
+  const {toggleModal, modal, user, setUser} = useAppStore()
 
   React.useEffect(() => {
     if (modal !== null) {
@@ -66,7 +66,6 @@ export default function App() {
     }
   }, [])
 
-  console.log(user)
   return (
     <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
       <NavbarBrand>
@@ -78,7 +77,7 @@ export default function App() {
         />
       </NavbarBrand>
       <NavbarContent justify="end">
-        <NavbarMenuToggle className={styles.navbarMenuToggle} />
+        <NavbarMenuToggle className={styles.navbarMenuToggle}/>
       </NavbarContent>
       <NavbarMenu>
         <NavbarMenuItem>
@@ -88,29 +87,47 @@ export default function App() {
             href='/reserva'
             size="lg"
           >
-            Clases
+            Inicio
           </Link>
         </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link
-            className="w-full"
-            color='foreground'
-            onClick={() => alert()}
-            size="lg"
-          >
-            Iniciar Sesión
-          </Link>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
-          <Link
-            className="w-full"
-            color='foreground'
-            onClick={() => alert()}
-            size="lg"
-          >
-            Registrarse
-          </Link>
-        </NavbarMenuItem>
+        {!user && (
+          <NavbarMenuItem>
+            <Link
+              className="w-full"
+              color='foreground'
+              onClick={() => toggleModal(ModalType.SIGN_UP)}
+              size="lg"
+              href="#"
+            >
+              Registrarse
+            </Link>
+          </NavbarMenuItem>
+        )}
+        {user ? (
+          <NavbarMenuItem>
+            <Link
+              className="w-full"
+              color='foreground'
+              onClick={() => toggleModal(ModalType.SIGN_IN)}
+              size="lg"
+              href="#"
+            >
+              Cerrar Sesión
+            </Link>
+          </NavbarMenuItem>
+        ) : (
+          <NavbarMenuItem>
+            <Link
+              className="w-full"
+              color='foreground'
+              onClick={() => toggleModal(ModalType.SIGN_IN)}
+              size="lg"
+              href="#"
+            >
+              Iniciar Sesión
+            </Link>
+          </NavbarMenuItem>
+        )}
       </NavbarMenu>
       {modal === ModalType.SIGN_IN && <SignInModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}

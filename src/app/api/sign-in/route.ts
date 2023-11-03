@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { cookies } from 'next/headers'
 import { CognitoIdentityProviderClient, AdminInitiateAuthCommand, AuthFlowType } from '@aws-sdk/client-cognito-identity-provider'
 import { ISignInForm } from '@/app/types';
 
@@ -9,7 +10,6 @@ const cognitoRegion = 'us-east-1'
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const data: ISignInForm = await req.json();
-  console.log(data)
   
   const params = {
     AuthFlow: AuthFlowType.ADMIN_USER_PASSWORD_AUTH,
@@ -21,18 +21,32 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
   }
 
-
-  const cognitoClient = new CognitoIdentityProviderClient({
-    region: cognitoRegion
-  })
+  const cognitoClient = new CognitoIdentityProviderClient({region: cognitoRegion})
   const adminInitiateAuthCommand = new AdminInitiateAuthCommand(params)
 
   try {
     const response = await cognitoClient.send(adminInitiateAuthCommand)
-    console.log(response)
-    return new NextResponse(JSON.stringify({ ...response.AuthenticationResult }), {
-      status: response['$metadata'].httpStatusCode,
+    // cookies().set('zeal_session', JSON.stringify({ ...response.AuthenticationResult }))
+    // const cookieStore = cookies()
+    // cookieStore.getAll().map((cookie) => console.log(cookie.name))
+    // return new NextResponse(JSON.stringify({ ...response.AuthenticationResult }), {
+    //   status: response['$metadata'].httpStatusCode,
+    //   headers: { 'Set-Cookie': `token=${token.value}` }
+    // });
+    const serverResponse = NextResponse.json(
+      {...response.AuthenticationResult},
+      {status: response['$metadata'].httpStatusCode}
+    );
+
+    serverResponse.cookies.set({
+      name: 'zeal_session',
+      value: response.AuthenticationResult?.AccessToken || '',
+      maxAge: 60*60*24*30,
+      httpOnly: true,
+      sameSite: true,
     });
+
+    return serverResponse
   } catch (err: any) {
       console.log(err)
       return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })

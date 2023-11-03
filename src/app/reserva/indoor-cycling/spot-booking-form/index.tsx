@@ -54,8 +54,6 @@ export default function SpotBookingForm(props: Props) {
     }
   }
 
-  console.log(user)
-
   return (
     <div className="w-full mx-12">
       <div className="flex justify-center pb-8 md:pb-10">

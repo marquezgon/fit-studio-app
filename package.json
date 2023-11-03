@@ -18,6 +18,7 @@
     "autoprefixer": "10.4.15",
     "axios": "^1.5.1",
     "classnames": "^2.3.2",
+    "cookies": "^0.8.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "formik": "^2.4.5",
@@ -37,6 +38,7 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@types/cookies": "^0.7.9",
     "@types/lodash": "^4.14.200",
     "@types/luxon": "^3.3.2"
   }

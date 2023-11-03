@@ -1,6 +1,8 @@
 import React from 'react'
+import { cookies } from 'next/headers'
 import Stripe from 'stripe'
 import {CheckCircle} from 'react-feather'
+import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
 
 interface ConfirmacionCompraRequest {
   searchParams?: {
@@ -10,25 +12,30 @@ interface ConfirmacionCompraRequest {
 
 const stripe = new Stripe('sk_test_51O59axEp4tLl6nYb2kmsvdSPu4kNzpnqIl0iVm8cFtWrNeJpc0QI5RPN4Zt2cVo1yhohOcdhMy90wIA6MRrQYOTm00UizEHwz9');
 
-async function getData(sessionId: string) {
+async function getData(sessionId: string, token: string) {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId)
-    const response = await fetch(`https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/package/assign`, {
+    const cognitoClient = new CognitoIdentityProviderClient({region: 'us-east-1'})
+    const input = {AccessToken: token};
+    const command = new GetUserCommand(input);
+    const data = await cognitoClient.send(command);
+
+    const response = await fetch('https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/package/assign', {
     method: 'POST',
     body: JSON.stringify({
       price: session.amount_subtotal,
       sessionId: session.id,
-      packageId: "3ba38d79-52bf-47af-a5bc-1dc86af9343d",
-      date: new Date().toISOString(),
-      clientReferenceId: session.client_reference_id
+      packageId: session.client_reference_id,
+      userId: data.Username
     }),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json'
     },
   })
-    console.log(session)
+
     const jsonRes = await response.json()
+    console.log(jsonRes)
     return jsonRes
 
   } catch(e) {
@@ -37,11 +44,11 @@ async function getData(sessionId: string) {
 }
 
 export default async function ConfirmacionCompra(request: ConfirmacionCompraRequest) {
+  const cookieStore = cookies()
+  const token = cookieStore.get('zeal_session')?.value || ''
   const id = request?.searchParams?.session_id || ''
+  const data = await getData(id, token)
 
-  const data = await getData(id)
-
-  console.log(data)
   return (
     <div className='container mx-auto'>
       <div className='py-8 text-center flex justify-center flex-col items-center'>

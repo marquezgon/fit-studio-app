@@ -3428,6 +3428,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4.14.200":
+  version: 4.14.200
+  resolution: "@types/lodash@npm:4.14.200"
+  checksum: 6471f8bb5da692a6ecf03a8da4935bfbc341e67ee9bcb4f5730bfacff0c367232548f0a01e8ac5ea18c6fe78fb085d502494e33ccb47a7ee87cbdee03b47d00d
+  languageName: node
+  linkType: hard
+
 "@types/luxon@npm:^3.3.2":
   version: 3.3.2
   resolution: "@types/luxon@npm:3.3.2"
@@ -4794,6 +4801,7 @@ __metadata:
     "@aws-sdk/client-cognito-identity-provider": ^3.430.0
     "@nextui-org/react": ^2.1.12
     "@react-input/mask": ^1.0.20
+    "@types/lodash": ^4.14.200
     "@types/luxon": ^3.3.2
     "@types/node": 20.6.0
     "@types/react": 18.2.21

@@ -37,6 +37,7 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.200",
     "@types/luxon": "^3.3.2"
   }
 }

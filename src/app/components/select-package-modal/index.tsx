@@ -44,7 +44,7 @@ export default function SelectPackageModal(props: ModalProps) {
             <ModalBody>
               <div className="grid grid-cols-1">
                 {packages.map((pack) => (
-                  <Link key={pack.id} href={`https://buy.stripe.com/test_fZeaH13iSgChe2s9AA?prefilled_promo_code=APERTURA40&?client_reference_id=${pack.id}`}>
+                  <Link key={pack.id} href={`https://buy.stripe.com/test_6oE16r06Gcm17E4001?client_reference_id=${pack.id}`}>
                     <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
                       <p className='text-lg uppercase'>{pack.name}</p>
                       <p className='text-lg'>${pack.price}.00</p>

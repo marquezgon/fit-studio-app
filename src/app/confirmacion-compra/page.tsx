@@ -13,8 +13,23 @@ const stripe = new Stripe('sk_test_51O59axEp4tLl6nYb2kmsvdSPu4kNzpnqIl0iVm8cFtWr
 async function getData(sessionId: string) {
   try {
     const session = await stripe.checkout.sessions.retrieve(sessionId)
- 
-    return session
+    const response = await fetch(`https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/package/assign`, {
+    method: 'POST',
+    body: JSON.stringify({
+      price: session.amount_subtotal,
+      sessionId: session.id,
+      packageId: "3ba38d79-52bf-47af-a5bc-1dc86af9343d",
+      date: new Date().toISOString(),
+      clientReferenceId: session.client_reference_id
+    }),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+  })
+    console.log(session)
+    const jsonRes = await response.json()
+    return jsonRes
 
   } catch(e) {
     console.log(e)

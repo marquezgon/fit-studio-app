@@ -24,8 +24,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   try {
     const response = await cognitoClient.send(adminInitiateAuthCommand)
-    console.log(response)
-    return new NextResponse(JSON.stringify({ answer: "Success" }), {
+
+    return new NextResponse(JSON.stringify({ ...response }), {
       status: response['$metadata'].httpStatusCode,
     });
   } catch (err: any) {

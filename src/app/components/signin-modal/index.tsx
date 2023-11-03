@@ -6,8 +6,9 @@ import {Modal, ModalContent, ModalHeader, ModalBody, Button} from '@nextui-org/r
 import {Formik, Form, Field, FormikProps} from 'formik'
 import * as Yup from 'yup'
 import {InputField, PhoneField} from '../fields'
+import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
-import {ISignInForm, ModalProps} from '@/app/types'
+import {ISignInForm, ModalAction, ModalProps, ModalType} from '@/app/types'
 
 const SigninSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -15,25 +16,36 @@ const SigninSchema = Yup.object().shape({
 });
 
 export default function SignInModal(props: ModalProps) {
+  const {toggleModal, action} = useAppStore()
   const handleSubmit = async (values: ISignInForm, actions: any) => {
-    console.log(values)
-    // try {
-    //   const response = await fetch(`/api/sign-in`, {
-    //     method: 'POST',
-    //     body: JSON.stringify(values),
-    //     headers: {
-    //       'Accept': 'application/json',
-    //       'Content-Type': 'application/json'
-    //     },
-    //   })
-    //   if (response.ok) {
+    const newValues = {
+      ...values,
+      phoneNumber: values.phoneNumber.replaceAll(' ', '')
+    }
 
-    //   }
-    // } catch(e) {
-    //   console.log(e)
-    // } finally {
-    //   actions.setSubmitting(false);
-    // }
+    try {
+      const response = await fetch(`/api/sign-in`, {
+        method: 'POST',
+        body: JSON.stringify(newValues),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      if (response.ok) {
+        const sessionInfo = await response.json()
+        localStorage.setItem('zeal_session', JSON.stringify(sessionInfo))
+        if (action === ModalAction.FROM_SIGN_UP) {
+          toggleModal(ModalType.SELECT_PACKAGE)
+        } else {
+          toggleModal(null)
+        }
+      }
+    } catch(e) {
+      console.log(e)
+    } finally {
+      actions.setSubmitting(false);
+    }
   }
 
   return (

@@ -7,7 +7,7 @@ import {Formik, Form, Field, FormikProps} from 'formik'
 import * as Yup from 'yup'
 import {InputField, PhoneField} from '../fields'
 import 'react-international-phone/style.css'
-import {IConfirmationCodeForm, ModalProps, ModalType} from '@/app/types'
+import {IConfirmationCodeForm, ModalAction, ModalProps, ModalType} from '@/app/types'
 import {useAppStore} from '@/app/store'
 import { errorMessages } from '@/app/utils'
 
@@ -18,7 +18,7 @@ const ConfirmationCodeSchema = Yup.object().shape({
 
 export default function ConfirmCodeModal(props: ModalProps) {
   const [error, setError] = React.useState<null | string>(null)
-  const {toggleModal} = useAppStore()
+  const {toggleModal, setAction} = useAppStore()
   const handleSubmit = async (values: IConfirmationCodeForm, actions: any) => {
     setError(null)
     try {
@@ -32,7 +32,8 @@ export default function ConfirmCodeModal(props: ModalProps) {
       })
       const jsonRes = await response.json()
       if (response.ok) {
-        toggleModal(ModalType.SELECT_PACKAGE)
+        setAction(ModalAction.FROM_SIGN_UP)
+        toggleModal(ModalType.SIGN_IN)
       } else {
         setError(errorMessages[jsonRes.error as string])
       }
@@ -42,6 +43,8 @@ export default function ConfirmCodeModal(props: ModalProps) {
       actions.setSubmitting(false);
     }
   }
+
+  const presetPhoneNumber = sessionStorage.getItem('zeal_temp_phone')
 
   return (
     <Modal 
@@ -64,7 +67,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
             <ModalBody>
               <Formik
                 initialValues={{
-                  phoneNumber: '+523313186670',
+                  phoneNumber: presetPhoneNumber || '',
                   code: 123456,
                 }}
                 validationSchema={ConfirmationCodeSchema}
@@ -74,7 +77,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
                   <Form>
                     {/* <Field name="email" component={InputField} size="sm" /> */}
                     <div className='py-2'>
-                      <PhoneField />
+                      <PhoneField disabled={!!presetPhoneNumber} />
                     </div>
                     <div className='py-2'>
                       <Field name="code" placeholder="123456" label="Ingresa el código que recibiste vía SMS" component={InputField} />

@@ -30,14 +30,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const response = await cognitoClient.send(adminInitiateAuthCommand)
     console.log(response)
-    return new NextResponse(JSON.stringify({ answer: "Success" }), {
+    return new NextResponse(JSON.stringify({ ...response.AuthenticationResult }), {
       status: response['$metadata'].httpStatusCode,
     });
   } catch (err: any) {
       console.log(err)
-      // const headers = req.headers;
       return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })
-
-      // return res.status(err['$metadata'].httpStatusCode).json({ message: err.toString() })
   }
 }

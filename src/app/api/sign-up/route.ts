@@ -12,7 +12,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const params = {
     ClientId: cognitoClientId,
     Password: data.password,
-    Username: '+523313186670',
+    Username: data.phoneNumber,
     UserAttributes: [
       {
           Name: 'custom:Size',
@@ -40,22 +40,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
       }
     ]
   }
-  const cognitoClient = new CognitoIdentityProviderClient({
-    region: cognitoRegion
-  })
+  const cognitoClient = new CognitoIdentityProviderClient({region: cognitoRegion})
   const signUpCommand = new SignUpCommand(params)
 
   try {
     const response = await cognitoClient.send(signUpCommand)
-    console.log(response)
-    return new NextResponse(JSON.stringify({ answer: "Success" }), {
-      status: response['$metadata'].httpStatusCode,
-    });
-  } catch (err: any) {
-      console.log(err)
-      // const headers = req.headers;
-      return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })
 
-      // return res.status(err['$metadata'].httpStatusCode).json({ message: err.toString() })
+    return new NextResponse(JSON.stringify({ ...response }), {
+      status: response['$metadata'].httpStatusCode,
+    })
+
+  } catch (err: any) {
+    return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })
   }
 }

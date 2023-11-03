@@ -11,6 +11,7 @@ import {months, days} from '@/app/utils'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
 import {ISignUpForm, ModalProps, ModalType} from '@/app/types'
+import Link from 'next/link'
 
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -28,16 +29,21 @@ const shoeSizes = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 4
 export default function SignUpModal(props: ModalProps) {
   const {toggleModal} = useAppStore()
   const handleSubmit = async (values: ISignUpForm, actions) => {
+    const newValues = {
+      ...values,
+      phoneNumber: values.phoneNumber.replaceAll(' ', '')
+    }
     try {
       const response = await fetch(`/api/sign-up`, {
         method: 'POST',
-        body: JSON.stringify(values),
+        body: JSON.stringify(newValues),
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
       })
       if (response.ok) {
+        sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
         toggleModal(ModalType.CONFIRM_CODE)
       }
     } catch(e) {
@@ -55,7 +61,7 @@ export default function SignUpModal(props: ModalProps) {
       isDismissable={false}
     >
       <ModalContent>
-        {(onClose) => (
+        {() => (
           <>
             <ModalHeader className="flex flex-col gap-1 justify-center items-center">
               <img
@@ -194,6 +200,9 @@ export default function SignUpModal(props: ModalProps) {
                           </div>
                         )}
                       </Field>
+                    </div>
+                    <div className='pt-2'>
+                      <Link href="#" onClick={() => toggleModal(ModalType.SIGN_IN)} className='hover:underline'>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
                     </div>
                     {/* <Input inputRef={inputRef}/> */}
                     <div className='flex flex-row pt-6 justify-end gap-8'>

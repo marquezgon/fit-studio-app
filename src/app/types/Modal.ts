@@ -9,3 +9,8 @@ export enum ModalType {
   CONFIRM_CODE = 'ConfirmCode',
   SELECT_PACKAGE = 'SelectPackage'
 }
+
+export enum ModalAction {
+  NORMAL = 'Normal',
+  FROM_SIGN_UP = 'FromSignUp',
+}

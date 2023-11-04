@@ -33,6 +33,7 @@ export default function SignUpModal(props: ModalProps) {
       ...values,
       phoneNumber: values.phoneNumber.replaceAll(' ', '')
     }
+
     try {
       const response = await fetch(`/api/sign-up`, {
         method: 'POST',
@@ -81,7 +82,7 @@ export default function SignUpModal(props: ModalProps) {
                   password: 'manchi89',
                   confirmPassword: 'manchi89',
                   hasOwnShoes: 'si',
-                  shoeSize: '',
+                  shoeSize: 'N/A',
                   month: '01',
                   day: '01',
                   email: 'marquezgon89@icloud.com'
@@ -110,7 +111,7 @@ export default function SignUpModal(props: ModalProps) {
                       {({ field, form: { touched, errors, setFieldValue } }: FieldProps) => (
                         <div className='py-2'>
                           <Select
-                            label="Do you have your own riding shoes?"
+                            label="Do you have your own cycling shoes?"
                             variant="bordered"
                             placeholder="Elige una opción"
                             errorMessage={touched[field.name] && errors[field.name] && `${errors[field.name]}`}

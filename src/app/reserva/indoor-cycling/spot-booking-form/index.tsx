@@ -87,17 +87,18 @@ export default function SpotBookingForm(props: Props) {
           )
         })}
       </div>
-      <div className='pt-8 text-center'>
-        <Button
-          size="lg"
-          isDisabled={!bookingItems.includes(SpotStatus.SELECTED)}
-          style={{ backgroundColor: '#232321', color: 'white' }}
-          className='hover:opacity-80'
-          onClick={handleBookClick}
-        >
-          RESERVAR
-        </Button>
-      </div>
+      {bookingItems.includes(SpotStatus.SELECTED) && (
+        <div className='pt-8 text-center'>
+          <Button
+            size="lg"
+            style={{ backgroundColor: '#232321', color: 'white' }}
+            className='hover:opacity-80'
+            onClick={handleBookClick}
+          >
+            RESERVAR
+          </Button>
+        </div>
+      )}
     </div>
   )
 }

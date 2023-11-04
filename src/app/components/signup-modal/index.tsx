@@ -24,7 +24,7 @@ const SignupSchema = Yup.object().shape({
   confirmPassword: Yup.string().required('Campo requerido').oneOf([Yup.ref('password')], 'Contraseñas no coinciden')
 });
 
-const shoeSizes = [30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50]
+const shoeSizes = ['30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50']
 
 export default function SignUpModal(props: ModalProps) {
   const {toggleModal} = useAppStore()
@@ -80,8 +80,8 @@ export default function SignUpModal(props: ModalProps) {
                   lastName: 'Marquez',
                   password: 'manchi89',
                   confirmPassword: 'manchi89',
-                  hasOwnShoes: 'no',
-                  shoeSize: '32',
+                  hasOwnShoes: 'si',
+                  shoeSize: '',
                   month: '01',
                   day: '01',
                   email: 'marquezgon89@icloud.com'
@@ -89,7 +89,7 @@ export default function SignUpModal(props: ModalProps) {
                 validationSchema={SignupSchema}
                 onSubmit={handleSubmit}
               >
-                {({isSubmitting}: FormikProps<ISignUpForm>) => (
+                {({isSubmitting, values}: FormikProps<ISignUpForm>) => (
                   <Form>
                     {/* <Field name="email" component={InputField} size="sm" /> */}
                     <div className='py-2'>
@@ -112,7 +112,7 @@ export default function SignUpModal(props: ModalProps) {
                           <Select
                             label="Do you have your own riding shoes?"
                             variant="bordered"
-                            placeholder="No"
+                            placeholder="Elige una opción"
                             errorMessage={touched[field.name] && errors[field.name] && `${errors[field.name]}`}
                             isInvalid={(touched[field.name] && errors[field.name]) as boolean}
                             onSelectionChange={(val) => { const selectedKey = val['currentKey']; setFieldValue('hasOwnShoes', selectedKey) }}
@@ -128,29 +128,31 @@ export default function SignUpModal(props: ModalProps) {
                         </div>
                       )}
                     </Field>
-                    <Field
-                      name="shoeSize"
-                    >
-                      {({ field, form: { touched, errors, setFieldValue } }: FieldProps) => (
-                        <div className='py-2'>
-                          <Select
-                            label="Shoe Size"
-                            variant="bordered"
-                            placeholder="Elige tu tamaño"
-                            errorMessage={touched[field.name] && errors[field.name] && `${errors[field.name]}`}
-                            isInvalid={(touched[field.name] && errors[field.name]) as boolean}
-                            onSelectionChange={(val) => { const selectedKey = val['currentKey']; setFieldValue('shoeSize', selectedKey) }}
-                            {...field}
-                          >
-                            {shoeSizes.map((size) => (
-                              <SelectItem key={size} value={size}>
-                                {size}
-                              </SelectItem>
-                            ))}
-                          </Select>
-                        </div>
-                      )}
-                    </Field>
+                    {values.hasOwnShoes === 'no' && (
+                      <Field
+                        name="shoeSize"
+                      >
+                        {({ field, form: { touched, errors, setFieldValue } }: FieldProps) => (
+                          <div className='py-2'>
+                            <Select
+                              label="Shoe Size"
+                              variant="bordered"
+                              placeholder="Elige tu tamaño"
+                              errorMessage={touched[field.name] && errors[field.name] && `${errors[field.name]}`}
+                              isInvalid={(touched[field.name] && errors[field.name]) as boolean}
+                              onSelectionChange={(val) => { const selectedKey = val['currentKey']; setFieldValue('shoeSize', selectedKey) }}
+                              {...field}
+                            >
+                              {shoeSizes.map((size) => (
+                                <SelectItem key={size} value={size}>
+                                  {size}
+                                </SelectItem>
+                              ))}
+                            </Select>
+                          </div>
+                        )}
+                      </Field>
+                    )}
                     <div className="grid grid-cols-2 gap-2">
                       <Field
                         name="month"

@@ -7,7 +7,6 @@ const cognitoRegion = 'us-east-1'
 
 export async function POST(req: NextRequest, res: NextResponse) {
   const data: ISignUpForm = await req.json();
-  console.log(data);
 
   const params = {
     ClientId: cognitoClientId,

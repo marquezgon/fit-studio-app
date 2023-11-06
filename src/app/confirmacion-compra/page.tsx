@@ -1,8 +1,8 @@
 import React from 'react'
 import { cookies } from 'next/headers'
 import Stripe from 'stripe'
-import {CheckCircle} from 'react-feather'
 import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
+import Compra from './component'
 
 interface ConfirmacionCompraRequest {
   searchParams?: {
@@ -34,9 +34,8 @@ async function getData(sessionId: string, token: string) {
     },
   })
 
-    const jsonRes = await response.json()
-    console.log(jsonRes)
-    return jsonRes
+    if (!response.ok) return undefined
+    return response.json()
 
   } catch(e) {
     console.log(e)
@@ -48,16 +47,11 @@ export default async function ConfirmacionCompra(request: ConfirmacionCompraRequ
   const token = cookieStore.get('zeal_session')?.value || ''
   const id = request?.searchParams?.session_id || ''
   const data = await getData(id, token)
+  console.log(data)
 
   return (
     <div className='container mx-auto'>
-      <div className='py-8 text-center flex justify-center flex-col items-center'>
-        <CheckCircle size='256' />
-        <div className='pt-8'>
-          <h1 className='text-4xl uppercase'>Gracias por tu compra</h1>
-          <h3 className='text-xl pt-3'>En unos momentos serás redirigido a continuar con tu reserva</h3>
-        </div>
-      </div>
+      <Compra />
     </div>
   )
 }

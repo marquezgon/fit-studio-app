@@ -1,10 +1,11 @@
 'use client'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import {Button} from '@nextui-org/react'
+import {useParams, usePathname} from 'next/navigation'
 import Spot, { SpotStatus, DummySpot } from '@/app/components/spot'
 import classNames from 'classnames'
-import { IClassInfo, IClass, ModalType } from '@/app/types'
+import { IClassInfo, IClass, ModalType, IUserPackage } from '@/app/types'
 import {DateTime} from 'luxon'
 import {useAppStore} from '@/app/store'
 
@@ -17,8 +18,11 @@ interface Props {
 }
 
 export default function SpotBookingForm(props: Props) {
+  const params = useParams()
+  const pathname = usePathname()
   const {user, toggleModal} = useAppStore()
-  const { seats} = props.data
+  const {seats} = props.data
+  console.log(params)
 
   const seatsMap = new Map()
   for (let i = 1; i <= 27; i++) {
@@ -30,8 +34,9 @@ export default function SpotBookingForm(props: Props) {
   })
   
   const initialValues: SpotStatus[] = Array.from(seatsMap.values())
-
+  const [userPackages, setUserPackages] = useState<IUserPackage[]>([])
   const [bookingItems, setBookingItems] = useState(initialValues)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
     const newItems = initialValues.map((item, i) => {
@@ -48,11 +53,56 @@ export default function SpotBookingForm(props: Props) {
     setBookingItems(newItems)
   }
 
-  const handleBookClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleBookClick = async (event: React.MouseEvent<HTMLElement>) => {
     if (!user) {
       toggleModal(ModalType.SIGN_UP)
+    } else if (user && userPackages.length > 0) {
+      setIsSubmitting(true)
+      const packageToUse = userPackages[0]
+      const seat = bookingItems.findIndex(item => item === SpotStatus.SELECTED) + 1
+
+      try {
+        const body = {
+          userId: user.id,
+          sessionId: packageToUse.package_id,
+          seat: seat
+        }
+        const response = await fetch(`/api/indoor-cycling/reservar-clase/${params.id}`, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        })
+        if (response.ok) {
+          const jsonRes =  await response.json()
+          console.log(jsonRes)
+        }
+      } catch(e) {
+        console.log(e)
+      } finally {
+        setIsSubmitting(false)
+      }
+    } else if (user && userPackages.length === 0) {
+      toggleModal(ModalType.SELECT_PACKAGE)
     }
   }
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem('zeal_last_url', pathname) 
+      const fetchUserPackages = async () => {
+        const response = await fetch(`/api/package/user?id=${user.id}`)
+        const data = await response.json()
+        if (response.ok) {
+          setUserPackages(data?.userPackages)
+        }
+      }
+  
+      fetchUserPackages()
+    }
+  }, [user])
 
   return (
     <div className="w-full mx-12">
@@ -94,6 +144,7 @@ export default function SpotBookingForm(props: Props) {
             style={{ backgroundColor: '#232321', color: 'white' }}
             className='hover:opacity-80'
             onClick={handleBookClick}
+            isLoading={isSubmitting}
           >
             RESERVAR
           </Button>

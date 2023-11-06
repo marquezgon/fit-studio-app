@@ -80,7 +80,7 @@ export default function App() {
         <NavbarMenuToggle className={styles.navbarMenuToggle}/>
       </NavbarContent>
       <NavbarMenu>
-        <NavbarMenuItem>
+        {/* <NavbarMenuItem>
           <Link
             className="w-full"
             color='foreground'
@@ -89,7 +89,7 @@ export default function App() {
           >
             Inicio
           </Link>
-        </NavbarMenuItem>
+        </NavbarMenuItem> */}
         {!user && (
           <NavbarMenuItem>
             <Link

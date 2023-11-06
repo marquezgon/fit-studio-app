@@ -10,7 +10,7 @@ import {InputField, PhoneField} from '../fields'
 import {months, days} from '@/app/utils'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
-import {ISignUpForm, ModalProps, ModalType} from '@/app/types'
+import {ISignUpForm, ModalProps} from '@/app/types'
 import Link from 'next/link'
 
 const SignupSchema = Yup.object().shape({
@@ -58,6 +58,7 @@ export default function SignUpModal(props: ModalProps) {
     <Modal 
       isOpen={props.isOpen}
       onOpenChange={props.onOpenChange}
+      onClose={() => toggleModal(null)}
       placement="top-center"
       isDismissable={false}
     >
@@ -209,7 +210,7 @@ export default function SignUpModal(props: ModalProps) {
                     </div>
                     {/* <Input inputRef={inputRef}/> */}
                     <div className='flex flex-row pt-6 justify-end gap-8'>
-                      <Button color="primary" type='submit' isLoading={isSubmitting}>
+                      <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>
                         Registrarse
                       </Button>
                     </div>

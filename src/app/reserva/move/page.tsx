@@ -4,6 +4,6 @@ import Schedule from '@/app/components/schedule'
 
 export default function IndoorCycling() {
   return (
-    <Schedule page="indoor-cycling" />
+    <Schedule page="move" />
   )  
 }

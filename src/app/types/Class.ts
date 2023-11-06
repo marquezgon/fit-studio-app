@@ -23,5 +23,7 @@ export interface IClassInfo {
 export enum EClassType {
   Normal = 'NORMAL',
   Free = 'FREE',
-  Special = 'SPECIAL'
+  Special = 'SPECIAL',
+  Barre = 'BARRE',
+  Yoga = 'YOGA'
 }

@@ -52,6 +52,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
       onOpenChange={props.onOpenChange}
       placement="top-center"
       isDismissable={false}
+      onClose={() => toggleModal(null)}
     >
       <ModalContent>
         {() => (
@@ -86,7 +87,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
                       <p className='text-orange-700	'>{error}</p>
                     )}
                     <div className='flex flex-row pt-6 pb-2 justify-end gap-8'>
-                      <Button color="primary" type='submit' isLoading={isSubmitting}>
+                      <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>
                         Confirm Code
                       </Button>
                     </div>

@@ -6,8 +6,10 @@ import {Modal, ModalContent, ModalHeader, ModalBody, Link} from '@nextui-org/rea
 import {usePathname} from 'next/navigation'; 
 import 'react-international-phone/style.css'
 import {IPackage, ModalProps} from '@/app/types'
+import { useAppStore } from '@/app/store';
 
 export default function SelectPackageModal(props: ModalProps) {
+  const {toggleModal} = useAppStore()
   const [packages, setPackages] = React.useState<IPackage[]>([])
   const pathname = usePathname() 
 
@@ -28,6 +30,7 @@ export default function SelectPackageModal(props: ModalProps) {
       onOpenChange={props.onOpenChange}
       placement="top-center"
       isDismissable={false}
+      onClose={() => toggleModal(null)}
       size='xl'
     >
       <ModalContent>

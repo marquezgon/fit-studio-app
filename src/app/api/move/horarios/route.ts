@@ -3,7 +3,7 @@ export async function GET(request: Request) {
 
   const startDate = info.searchParams.get('start')
   const endDate = info.searchParams.get('end')
-  const res = await fetch(`https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/indoor-cycling/horarios?start=${startDate}&end=${endDate}`, {
+  const res = await fetch(`https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/move/horarios?start=${startDate}&end=${endDate}`, {
     headers: {
       'Content-Type': 'application/json',
     },

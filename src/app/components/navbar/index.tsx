@@ -66,6 +66,27 @@ export default function App() {
     }
   }, [])
 
+  const handleSignOut = async () => {
+    try {
+      const response = await fetch(`/api/sign-out`, {
+        method: 'POST',
+        // body: JSON.stringify(newValues),
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      if (response.ok) {
+        localStorage.removeItem('zeal_session')
+        // sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
+      }
+    } catch(e) {
+      console.log(e)
+    } finally {
+
+    }
+  }
+
   return (
     <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
       <NavbarBrand>
@@ -108,7 +129,7 @@ export default function App() {
             <Link
               className="w-full"
               color='foreground'
-              onClick={() => toggleModal(ModalType.SIGN_IN)}
+              onClick={() => handleSignOut()}
               size="lg"
               href="#"
             >

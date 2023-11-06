@@ -54,6 +54,7 @@ export default function SignInModal(props: ModalProps) {
       onOpenChange={props.onOpenChange}
       placement="top-center"
       isDismissable={false}
+      onClose={() => toggleModal(null)}
     >
       <ModalContent>
         {() => (
@@ -85,7 +86,7 @@ export default function SignInModal(props: ModalProps) {
                       <Field name="password" type="password" placeholder="Contraseña" label="Password" component={InputField} />
                     </div>
                     <div className='flex flex-row pt-6 justify-end gap-8'>
-                      <Button color="primary" type='submit' isLoading={isSubmitting}>
+                      <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>
                         Log In
                       </Button>
                     </div>

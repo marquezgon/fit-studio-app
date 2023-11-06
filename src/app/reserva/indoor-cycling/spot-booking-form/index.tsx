@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react'
 import {Button} from '@nextui-org/react'
-import {useParams, usePathname} from 'next/navigation'
+import {useParams, usePathname, useRouter} from 'next/navigation'
 import Spot, { SpotStatus, DummySpot } from '@/app/components/spot'
 import classNames from 'classnames'
 import { IClassInfo, IClass, ModalType, IUserPackage } from '@/app/types'
@@ -18,11 +18,11 @@ interface Props {
 }
 
 export default function SpotBookingForm(props: Props) {
+  const router = useRouter()
   const params = useParams()
   const pathname = usePathname()
   const {user, toggleModal} = useAppStore()
   const {seats} = props.data
-  console.log(params)
 
   const seatsMap = new Map()
   for (let i = 1; i <= 27; i++) {
@@ -76,13 +76,12 @@ export default function SpotBookingForm(props: Props) {
           },
         })
         if (response.ok) {
-          const jsonRes =  await response.json()
-          console.log(jsonRes)
+          // const jsonRes =  await response.json()
+          router.push('/clase-reservada')
         }
       } catch(e) {
-        console.log(e)
-      } finally {
         setIsSubmitting(false)
+        console.log(e)
       }
     } else if (user && userPackages.length === 0) {
       toggleModal(ModalType.SELECT_PACKAGE)

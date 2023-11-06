@@ -46,6 +46,8 @@ export default async function ConfirmacionCompra(request: ConfirmacionCompraRequ
   const cookieStore = cookies()
   const token = cookieStore.get('zeal_session')?.value || ''
   const id = request?.searchParams?.session_id || ''
+  console.log(token)
+  console.log(id)
   const data = await getData(id, token)
   console.log(data)
 

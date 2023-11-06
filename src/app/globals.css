@@ -16,6 +16,13 @@
   }
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
 body {
   color: rgb(var(--foreground-rgb));
   background-color: #fff;

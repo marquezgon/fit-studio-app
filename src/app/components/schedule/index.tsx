@@ -40,20 +40,20 @@ export default function Schedule(props: { page: string }) {
     fetchClasses();
   }, [timeframe])
 
-  const firstDay = <p className='uppercase text-sm md:text-base'>{firstDayDate.toFormat('EEE dd MMM')}</p>
-  const secondDay = <p className='uppercase text-sm md:text-base'>{secondDayDate.toFormat('EEE dd MMM')}</p>
-  const thirdDay = <p className='uppercase text-sm md:text-base'>{thirdDayDate.toFormat('EEE dd MMM')}</p>
-  const fourthDay = <p className='uppercase text-sm md:text-base'>{fourthDayDate.toFormat('EEE dd MMM')}</p>
-  const fifthDay = <p className='uppercase text-sm md:text-base'>{fifthDayDate.toFormat('EEE dd MMM')}</p>
-  const sixthDay = <p className='uppercase text-sm md:text-base'>{sixthDayDate.toFormat('EEE dd MMM')}</p>
-  const seventhDay = <p className='uppercase text-sm md:text-base'>{seventhDayDate.toFormat('EEE dd MMM')}</p>
+  const firstDay = <p className='uppercase text-[0.8rem] md:text-base'>{firstDayDate.toFormat('EEE dd MMM')}</p>
+  const secondDay = <p className='uppercase text-[0.8rem] md:text-base'>{secondDayDate.toFormat('EEE dd MMM')}</p>
+  const thirdDay = <p className='uppercase text-[0.8rem] md:text-base'>{thirdDayDate.toFormat('EEE dd MMM')}</p>
+  const fourthDay = <p className='uppercase text-[0.8rem] md:text-base'>{fourthDayDate.toFormat('EEE dd MMM')}</p>
+  const fifthDay = <p className='uppercase text-[0.8rem] md:text-base'>{fifthDayDate.toFormat('EEE dd MMM')}</p>
+  const sixthDay = <p className='uppercase text-[0.8rem] md:text-base'>{sixthDayDate.toFormat('EEE dd MMM')}</p>
+  const seventhDay = <p className='uppercase text-[0.8rem] md:text-base'>{seventhDayDate.toFormat('EEE dd MMM')}</p>
 
   const title = props.page === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'
 
   return (
     <main className="container mx-auto min-h-screen">
-      <div className='grid grid-cols-7 text-center pt-8 pb-12'>
-        <div className='col-start-1 col-end-3'>
+      <div className='pt-8 pb-8 md: pb-12 flex justify-around'>
+        <div>
           <Button
             size="sm"
             variant="flat"
@@ -64,10 +64,10 @@ export default function Schedule(props: { page: string }) {
             Atrás
           </Button>
         </div>
-        <div className='col-start-4 col-end-4'>
-          <h3 className='text-xl font-[300] pt-6 uppercase'>{title}</h3>
+        <div>
+          <h3 className='text-xl font-[300] uppercase'>{title}</h3>
         </div>
-        <div className='col-end-8 col-span-1'>
+        <div>
             <Button
               size="sm"
               isDisabled={timeframe >= 21}

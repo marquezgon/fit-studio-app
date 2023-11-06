@@ -17,12 +17,12 @@ export default function ClassCalendar(props: Props) {
     return (
       <div key={item.toISO()}>
         {props.classes[item.toFormat('dd')]?.map((openClass: IClass) =>  (
-          <div className="py-2" key={openClass.id}>
+          <div className="py-0.5 md:py-2" key={openClass.id}>
             <Link href={`/reserva/${props.page}/${openClass.id}`}>
               <Card className={`${styles.clipCard} ${styles.bgLight} h-16 md:h-32`}>
                 <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
-                  <p className='text-[0.6rem] md:text-base'>{openClass.coach}</p>
-                  <p className='text-[0.6rem] md:text-base'>
+                  <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
+                  <p className='text-[0.5rem] md:text-base'>
                     {DateTime.fromISO(openClass.date).setLocale('es').toFormat("h a")}
                   </p>
                   {openClass.type === EClassType.Special && (

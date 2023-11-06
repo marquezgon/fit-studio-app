@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react'
 import {Button} from '@nextui-org/react'
-import {useParams, usePathname} from 'next/navigation'
+import {useParams, usePathname, useRouter} from 'next/navigation'
 import Spot, { SpotStatus, DummySpot } from '@/app/components/spot'
 import { IClassInfo, IClass, ModalType, IUserPackage, EClassType } from '@/app/types'
 import {DateTime} from 'luxon'
@@ -17,6 +17,7 @@ interface Props {
 }
 
 export default function SpotBookingForm(props: Props) {
+  const router = useRouter()
   const params = useParams()
   const pathname = usePathname()
   const {user, toggleModal} = useAppStore()
@@ -75,13 +76,11 @@ export default function SpotBookingForm(props: Props) {
           },
         })
         if (response.ok) {
-          const jsonRes =  await response.json()
-          console.log(jsonRes)
+          router.push('/clase-reservada')
         }
       } catch(e) {
-        console.log(e)
-      } finally {
         setIsSubmitting(false)
+        console.log(e)
       }
     } else if (user && userPackages.length === 0) {
       toggleModal(ModalType.SELECT_PACKAGE)

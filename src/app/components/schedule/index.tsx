@@ -48,10 +48,12 @@ export default function Schedule(props: { page: string }) {
   const sixthDay = <p className='uppercase text-sm md:text-base'>{sixthDayDate.toFormat('EEE dd MMM')}</p>
   const seventhDay = <p className='uppercase text-sm md:text-base'>{seventhDayDate.toFormat('EEE dd MMM')}</p>
 
+  const title = props.page === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'
+
   return (
     <main className="container mx-auto min-h-screen">
       <div className='grid grid-cols-7 text-center pt-8 pb-12'>
-        <div className='col-start-1 col-end-2'>
+        <div className='col-start-1 col-end-3'>
           <Button
             size="sm"
             variant="flat"
@@ -61,6 +63,9 @@ export default function Schedule(props: { page: string }) {
           >
             Atrás
           </Button>
+        </div>
+        <div className='col-start-4 col-end-4'>
+          <h3 className='text-xl font-[300] pt-6 uppercase'>{title}</h3>
         </div>
         <div className='col-end-8 col-span-1'>
             <Button

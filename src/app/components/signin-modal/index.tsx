@@ -2,13 +2,14 @@
 'use client'
 
 import React from 'react'
-import {Modal, ModalContent, ModalHeader, ModalBody, Button} from '@nextui-org/react'
+import {Modal, ModalContent, ModalHeader, ModalBody, Button, Link} from '@nextui-org/react'
 import {Formik, Form, Field, FormikProps} from 'formik'
 import * as Yup from 'yup'
 import {InputField, PhoneField} from '../fields'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
 import {ISignInForm, ModalAction, ModalProps, ModalType} from '@/app/types'
+import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
 
 const SigninSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -16,7 +17,7 @@ const SigninSchema = Yup.object().shape({
 });
 
 export default function SignInModal(props: ModalProps) {
-  const {toggleModal, action} = useAppStore()
+  const {toggleModal, action, setUser} = useAppStore()
   const handleSubmit = async (values: ISignInForm, actions: any) => {
     const newValues = {
       ...values,
@@ -35,6 +36,27 @@ export default function SignInModal(props: ModalProps) {
       if (response.ok) {
         const sessionInfo = await response.json()
         localStorage.setItem('zeal_session', JSON.stringify(sessionInfo))
+        const cognitoClient = new CognitoIdentityProviderClient({region: 'us-east-1'})
+        
+        const input = {AccessToken: sessionInfo.AccessToken};
+        const command = new GetUserCommand(input);
+        const data = await cognitoClient.send(command);
+
+        const userAttributes = data.UserAttributes!.reduce((acc, prev) => {
+          if (prev.Name === 'given_name') {
+            acc.firstName = prev.Value!
+          } else if (prev.Name === 'family_name') {
+            acc.lastName = prev.Value!
+          } else if (prev.Name === 'phone_number') {
+            acc.phoneNumber = prev.Value!
+          }
+          return acc
+        }, {firstName: '', lastName: '', phoneNumber: ''})
+
+        setUser({
+          id: data.Username,
+          ...userAttributes
+        })
         if (action === ModalAction.FROM_SIGN_UP) {
           toggleModal(ModalType.SELECT_PACKAGE)
         } else {
@@ -84,6 +106,14 @@ export default function SignInModal(props: ModalProps) {
                     </div>
                     <div className='py-2'>
                       <Field name="password" type="password" placeholder="Contraseña" label="Password" component={InputField} />
+                    </div>
+                    <div className='pt-2'>
+                      <Link
+                        href="#" onClick={() => toggleModal(ModalType.SIGN_UP)}
+                        className='hover:underline text-gray-950'
+                      >
+                        ¿No tienes una cuenta? Regístrate aquí
+                      </Link>
                     </div>
                     <div className='flex flex-row pt-6 justify-end gap-8'>
                       <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>

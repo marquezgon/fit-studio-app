@@ -54,7 +54,7 @@ export default function SpotBookingForm(props: Props) {
 
   const handleBookClick = async (event: React.MouseEvent<HTMLElement>) => {
     if (!user) {
-      toggleModal(ModalType.SIGN_UP)
+      toggleModal(ModalType.SIGN_IN)
     } else if (user && userPackages.length > 0) {
       setIsSubmitting(true)
       const packageToUse = userPackages[0]
@@ -103,7 +103,7 @@ export default function SpotBookingForm(props: Props) {
     }
   }, [user])
 
-  console.log(props.data)
+  console.log(user)
 
   return (
     <div className="md:w-auto md:mx-12">

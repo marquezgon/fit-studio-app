@@ -9,7 +9,7 @@ export interface ModalSlice {
 }
 
 export const createModalSlice: StateCreator<ModalSlice> = (set) => ({
-  modal: ModalType.SELECT_PACKAGE,
+  modal: null,
   action: ModalAction.NORMAL,
   toggleModal: (modal) => {
     set({ modal });

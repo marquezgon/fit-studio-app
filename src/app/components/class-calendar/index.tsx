@@ -22,8 +22,8 @@ export default function ClassCalendar(props: Props) {
               <Card className={`${styles.clipCard} ${styles.bgLight} h-16 md:h-32`}>
                 <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
                   <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
-                  <p className='text-[0.5rem] md:text-base'>
-                    {DateTime.fromISO(openClass.date).setLocale('es').toFormat("h a")}
+                  <p className='text-[0.5rem] md:text-base uppercase'>
+                    {DateTime.fromISO(openClass.date).toFormat("t")}
                   </p>
                   {openClass.type === EClassType.Special && (
                     <p className='text-[0.6rem] md:text-base'>{openClass.description}</p>

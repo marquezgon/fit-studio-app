@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import Link from 'next/link'
+import LetsDoThisButton from './lets-do-this-button'
 
 export default function ClaseReservada() {
   return (
@@ -31,9 +31,7 @@ export default function ClaseReservada() {
         </h3>
         <div className='w-full flex justify-center'>
           <div className='mt-2 w-fit text-center rounded-sm' style={{ backgroundColor: 'black' }}>
-            <Link href='https://zealstudio.mx/home/' className='text-white'>
-                <div className='py-1 px-2'>LET&apos;S DO THIS</div>
-            </Link>
+            <LetsDoThisButton />
           </div>
         </div>
       </div>

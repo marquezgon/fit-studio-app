@@ -13,20 +13,20 @@ export default function ClaseReservada() {
         />
       </div>
       <div className='flex flex-col justify-center pt-6 w-10/12 md:w-1/2 text-center'>
-        <h3 className='text-lg md:text-xl font-[200] pt-6 uppercase'>
+        <h3 className='text-md md:text-xl font-[200] pt-3 md:pt-6 uppercase'>
           SOMOS SERES CICLICOS EN BUSCA DE UN EQUILIBRIO, SOMOS ACTITUD DE VIDA,SOMOS ZEAL.
         </h3>
-        <h2 className='text-2xl md:text-3xl font-[300] pt-8 md:pt-12 uppercase'>
+        <h2 className='text-xl md:text-3xl font-[300] pt-4 md:pt-10 uppercase'>
           ¡GRACIAS POR TU RESERVA!
         </h2>
-        <p className='text-base pt-8 md:pt-12 font-[300]'>Te esperamos 15 minutos antes de la hora en que empieza tu disciplina.</p>
-        <p className='text-base pt-4 font-[300]'>
+        <p className='text-sm md:text-base pt-3 md:pt-8 font-[300]'>Te esperamos 15 minutos antes de la hora en que empieza tu disciplina.</p>
+        <p className='text-sm md:text-base pt-3 md:pt-4 font-[300]'>
           En Zeal valoramos la puntualidad y compromiso de nuestra comunidad, por lo que pasados los primeros 5 min de clase, ya no se te permetira la entrada al salon. De esta forma no interrumpimos el momento sagrado que creamos estando nuestras almas en movimiento.
         </p>
-        <h3 className='text-xl font-[300] pt-6 uppercase'>
+        <h3 className='text-lg md:text-xl font-[300] pt-4 md:pt-6 uppercase'>
           NOS MOVEMOS Y VIBRAMOS JUNTOS
         </h3>
-        <h3 className='text-xl font-[300] pt-4 uppercase'>
+        <h3 className='text-lg md:text-xl font-[300] pt-3 md:pt-4 uppercase'>
           ARE YOU READY?
         </h3>
         <div className='w-full flex justify-center'>

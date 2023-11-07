@@ -90,7 +90,7 @@ export default function App() {
   return (
     <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
       <NavbarBrand>
-        <Link href="/">
+        <Link href="https://zealstudio.mx/home/">
           <Image
             src="/logo.png"
             width={200}
@@ -107,7 +107,7 @@ export default function App() {
           <Link
             className="w-full"
             color='foreground'
-            href='/reserva'
+            href='https://zealstudio.mx/home/'
             size="lg"
           >
             Inicio

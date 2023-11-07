@@ -31,7 +31,7 @@ export default function ClaseReservada() {
         </h3>
         <div className='w-full flex justify-center'>
           <div className='mt-2 w-fit text-center rounded-sm' style={{ backgroundColor: 'black' }}>
-            <Link href='/' className='text-white'>
+            <Link href='https://zealstudio.mx/home/' className='text-white'>
                 <div className='py-1 px-2'>LET&apos;S DO THIS</div>
             </Link>
           </div>

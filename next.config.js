@@ -9,6 +9,15 @@ const nextConfig = {
   //   ]
   // },
   // …
+  async redirects() {
+    return [
+      {
+        source: '/reserva',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   webpack: (config, { webpack, isServer, nextRuntime }) => {
     // Avoid AWS SDK Node.js require issue
     if (isServer && nextRuntime === "nodejs")

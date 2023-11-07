@@ -53,7 +53,7 @@ export default async function ConfirmacionCompra(request: ConfirmacionCompraRequ
 
   return (
     <div className='container mx-auto'>
-      <Compra />
+      <Compra data={data}/>
     </div>
   )
 }

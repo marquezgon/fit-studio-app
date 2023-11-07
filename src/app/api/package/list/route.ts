@@ -3,6 +3,7 @@ export async function GET(request: Request) {
     headers: {
       'Content-Type': 'application/json',
     },
+    cache: 'no-store'
   })
   const packages = await res.json()
 

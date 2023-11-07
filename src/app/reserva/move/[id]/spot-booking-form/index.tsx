@@ -22,7 +22,6 @@ export default function SpotBookingForm(props: Props) {
   const pathname = usePathname()
   const {user, toggleModal} = useAppStore()
   const {seats} = props.data
-  console.log(params)
 
   const seatsMap = new Map()
   for (let i = 1; i <= 27; i++) {
@@ -80,7 +79,6 @@ export default function SpotBookingForm(props: Props) {
         }
       } catch(e) {
         setIsSubmitting(false)
-        console.log(e)
       }
     } else if (user && userPackages.length === 0) {
       toggleModal(ModalType.SELECT_PACKAGE)
@@ -121,7 +119,7 @@ export default function SpotBookingForm(props: Props) {
           {DateTime.fromISO(props.data.classInfo.date).setLocale('es').toFormat("dd / LLL / yyyy | EEEE t a")}
         </p>
       </div>
-      <div className="flex justify-center pb-12 md:pt-4 flex-col items-center">
+      <div className="flex justify-center pb-4 md:pt-4 flex-col items-center">
         <p className="text-lg uppercase font-light">{props.data.classInfo.type}</p>
         <p className="text-2xl uppercase">{props.data.classInfo.coach}</p>
       </div>

@@ -3,6 +3,8 @@ export interface IPackage {
   name: string
   price: number
   expires_in: number
+  amount: number
+  url: string
 }
 
 export interface IUserPackage {

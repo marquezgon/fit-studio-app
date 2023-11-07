@@ -32,7 +32,6 @@ export default function Schedule(props: { page: string }) {
       if (Array.isArray(data?.horarios)) {
         const day = (item: IClass) => DateTime.fromISO(item.date).toFormat('dd')
         const result = _.groupBy(data.horarios, day)
-        console.log(result)
         setClasses(result)
       }
     };

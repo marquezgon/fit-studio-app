@@ -10,7 +10,7 @@ import {InputField, PhoneField} from '../fields'
 import {months, days} from '@/app/utils'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
-import {ISignUpForm, ModalProps} from '@/app/types'
+import {ISignUpForm, ModalProps, ModalType} from '@/app/types'
 import Link from 'next/link'
 
 const SignupSchema = Yup.object().shape({
@@ -45,7 +45,7 @@ export default function SignUpModal(props: ModalProps) {
       })
       if (response.ok) {
         sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
-        toggleModal(ModalType.CONFIRM_CODE)
+        toggleModal(ModalType.SIGN_IN)
       }
     } catch(e) {
       console.log(e)
@@ -78,15 +78,15 @@ export default function SignUpModal(props: ModalProps) {
               <Formik
                 initialValues={{
                   phoneNumber: '',
-                  firstName: 'Gonzalo',
-                  lastName: 'Marquez',
-                  password: 'manchi89',
-                  confirmPassword: 'manchi89',
+                  firstName: '',
+                  lastName: '',
+                  password: '',
+                  confirmPassword: '',
                   hasOwnShoes: 'si',
                   shoeSize: 'N/A',
                   month: '01',
                   day: '01',
-                  email: 'marquezgon89@icloud.com'
+                  email: ''
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={handleSubmit}

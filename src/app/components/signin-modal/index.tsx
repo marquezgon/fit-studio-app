@@ -70,6 +70,8 @@ export default function SignInModal(props: ModalProps) {
     }
   }
 
+  const presetPhoneNumber = sessionStorage.getItem('zeal_temp_phone')
+
   return (
     <Modal 
       isOpen={props.isOpen} 
@@ -93,7 +95,7 @@ export default function SignInModal(props: ModalProps) {
               <Formik
                 initialValues={{
                   password: '',
-                  phoneNumber: '',
+                  phoneNumber: presetPhoneNumber || '',
                 }}
                 validationSchema={SigninSchema}
                 onSubmit={handleSubmit}

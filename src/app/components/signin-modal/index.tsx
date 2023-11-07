@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import {InputField, PhoneField} from '../fields'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
-import {ISignInForm, ModalAction, ModalProps, ModalType} from '@/app/types'
+import {ISignInForm, ModalProps, ModalType} from '@/app/types'
 import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
 
 const SigninSchema = Yup.object().shape({
@@ -17,7 +17,7 @@ const SigninSchema = Yup.object().shape({
 });
 
 export default function SignInModal(props: ModalProps) {
-  const {toggleModal, action, setUser} = useAppStore()
+  const {toggleModal, setUser} = useAppStore()
   const handleSubmit = async (values: ISignInForm, actions: any) => {
     const newValues = {
       ...values,
@@ -57,11 +57,7 @@ export default function SignInModal(props: ModalProps) {
           id: data.Username,
           ...userAttributes
         })
-        if (action === ModalAction.FROM_SIGN_UP) {
-          toggleModal(ModalType.SELECT_PACKAGE)
-        } else {
-          toggleModal(null)
-        }
+        toggleModal(null)
       }
     } catch(e) {
       console.log(e)

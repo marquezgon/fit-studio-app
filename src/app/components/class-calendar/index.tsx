@@ -12,6 +12,7 @@ interface Props {
 
 export default function ClassCalendar(props: Props) {
   // const classKeys = Object.keys(props.classes)
+  console.log(props.classes)
 
   const renderClasses = props.dates.map((item: DateTime) => {
     return (

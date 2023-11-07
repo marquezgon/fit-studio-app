@@ -24,8 +24,8 @@ export default function Schedule(props: { page: string }) {
 
   useEffect(() => {
     const fetchClasses = async () => {
-      const startDate = firstDayDate.toUTC().toISO()
-      const endDate = seventhDayDate.toUTC().toISO()
+      const startDate = firstDayDate.toUTC()
+      const endDate = seventhDayDate.endOf('day').toUTC()
       const response = await fetch(`/api/${props.page}/horarios?start=${startDate}&end=${endDate}`)
       const data = await response.json()
 

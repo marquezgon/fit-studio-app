@@ -78,6 +78,7 @@ export default function App() {
       })
       if (response.ok) {
         localStorage.removeItem('zeal_session')
+        setUser(null)
         // sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
       }
     } catch(e) {

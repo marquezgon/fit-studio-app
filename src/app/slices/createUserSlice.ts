@@ -3,7 +3,7 @@ import {IUser} from '../types';
 
 export interface UserSlice {
   user: IUser | null
-  setUser: (user: IUser) => void
+  setUser: (user: IUser | null) => void
 }
 
 export const createUserSlice: StateCreator<UserSlice> = (set) => ({

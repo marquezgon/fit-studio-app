@@ -14,9 +14,11 @@ export default function SelectPackageModal(props: ModalProps) {
   React.useEffect(() => {
     const fetchPackages = async () => {
       const response = await fetch(`/api/package/list`)
-      const data = await response.json()
 
-      setPackages(data?.packages)
+      if (response.ok) {
+        const data = await response.json()
+        setPackages(data?.packages)
+      }
     };
 
     fetchPackages()

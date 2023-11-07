@@ -142,7 +142,7 @@ export default function SpotBookingForm(props: Props) {
         <div />
         <div />
         <div />
-        {props.data.classInfo.type === EClassType.Yoga ? (
+        {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
           <div>
             <Spot text={'17'} index={16} handleClick={handleClick} status={bookingItems[16]} disabled={bookingItems[16] !== SpotStatus.AVAILABLE} />
           </div>
@@ -154,7 +154,7 @@ export default function SpotBookingForm(props: Props) {
         <div />
         <div />
         <div />
-        {props.data.classInfo.type === EClassType.Yoga ? (
+        {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
           <div>
             <Spot text={'16'} index={15} handleClick={handleClick} status={bookingItems[15]} disabled={bookingItems[15] !== SpotStatus.AVAILABLE} />
           </div>
@@ -166,7 +166,7 @@ export default function SpotBookingForm(props: Props) {
         <div />
         <div />
         <div />
-        {props.data.classInfo.type === EClassType.Yoga ? (
+        {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
           <div>
             <Spot text={'15'} index={14} handleClick={handleClick} status={bookingItems[14]} disabled={bookingItems[14] !== SpotStatus.AVAILABLE} />
           </div>

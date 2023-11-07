@@ -11,9 +11,6 @@ interface Props {
 }
 
 export default function ClassCalendar(props: Props) {
-  // const classKeys = Object.keys(props.classes)
-  console.log(props.classes)
-
   const renderClasses = props.dates.map((item: DateTime) => {
     return (
       <div key={item.toISO()}>
@@ -22,7 +19,14 @@ export default function ClassCalendar(props: Props) {
             <Link href={`/reserva/${props.page}/${openClass.id}`}>
               <Card className={`${styles.clipCard} ${styles.bgLight} h-16 md:h-32`}>
                 <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
-                  <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
+                  {(openClass.type === EClassType.Yoga || openClass.type === EClassType.YogaKids || openClass.type === EClassType.Barre) ? (
+                    <div>
+                      <p className='text-[0.3rem] md:text-[0.6rem] uppercase'>{openClass.type}</p>
+                      <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
+                    </div>  
+                  ): (
+                    <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
+                  )}
                   <p className='text-[0.5rem] md:text-base uppercase'>
                     {DateTime.fromISO(openClass.date).toFormat("t")}
                   </p>

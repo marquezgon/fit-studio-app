@@ -25,5 +25,6 @@ export enum EClassType {
   Free = 'FREE',
   Special = 'SPECIAL',
   Barre = 'BARRE',
-  Yoga = 'YOGA'
+  Yoga = 'YOGA',
+  YogaKids = 'YOGA KIDS',
 }

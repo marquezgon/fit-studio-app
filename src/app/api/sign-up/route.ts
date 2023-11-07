@@ -52,13 +52,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const response = await cognitoClient.send(signUpCommand)
     const command = new AdminConfirmSignUpCommand(input)
-    const confirmSignUpResponse = await cognitoClient.send(command);
+    const confirmSignUpResponse = await cognitoClient.send(command)
+    console.log(confirmSignUpResponse)
 
     return new NextResponse(JSON.stringify({ ...confirmSignUpResponse }), {
       status: response['$metadata'].httpStatusCode,
     })
 
   } catch (err: any) {
+    console.log(err)
     return NextResponse.json({ error: err.toString() }, { status: err['$metadata'].httpStatusCode })
   }
 }

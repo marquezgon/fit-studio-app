@@ -3,18 +3,14 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { IPackage, ModalType } from '@/app/types'
 import { useAppStore } from '@/app/store'
 
 export default function ZealPackages(props: { packages: IPackage[] }) {
   const {user, toggleModal} = useAppStore()
-  const router = useRouter()
   
-  const handleClick = (pack: IPackage) => {
-    if (user) {
-      router.push(pack.url)
-    } else {
+  const handleClick = () => {
+    if (!user) {
       toggleModal(ModalType.SIGN_IN)
     }
   }
@@ -31,7 +27,7 @@ export default function ZealPackages(props: { packages: IPackage[] }) {
       <h3 className='text-xl font-[100] pt-8 pb-4'>SELECT YOUR PACKAGE</h3>
       <div className="grid grid-cols-1">
         {props.packages.map((pack) => (
-          <Link key={pack.id} href="#" onClick={() => handleClick(pack)}>
+          <Link key={pack.id} href={user ? pack.url : '#'} onClick={() => handleClick()}>
             <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
               <p className='text-lg uppercase'>{pack.name}</p>
               <p className='text-lg'>${pack.price.toString().substring(0, pack.price.toString().length - 2)}.00</p>

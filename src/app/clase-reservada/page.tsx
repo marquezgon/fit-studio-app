@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import LetsDoThisButton from './lets-do-this-button'
+import LetsDoThisButton from './component'
 
 export default function ClaseReservada() {
   return (

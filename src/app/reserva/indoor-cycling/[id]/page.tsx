@@ -1,6 +1,8 @@
 import { Request } from '@/app/types/Request'
 import SpotBookingForm from '../spot-booking-form'
 
+export const dynamic = "error"
+
 async function getData(id: string) {
   const res = await fetch(`https://p4xukwco0h.execute-api.us-east-1.amazonaws.com/Beta/indoor-cycling/book-class/${id}`, { cache: 'no-store' })
   if (!res.ok) {

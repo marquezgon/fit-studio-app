@@ -1,3 +1,5 @@
+import { SpotStatus } from "../components/spot"
+
 export interface IClass {
   id: string
   date: string
@@ -27,4 +29,10 @@ export enum EClassType {
   Barre = 'BARRE',
   Yoga = 'YOGA',
   YogaKids = 'YOGA KIDS',
+}
+
+export interface IBookedClass {
+  [key: string]: {
+    bookedSeats: SpotStatus[]
+  }
 }

@@ -20,25 +20,34 @@ export default function SpotBookingForm(props: Props) {
   const router = useRouter()
   const params = useParams()
   const pathname = usePathname()
-  const {user, toggleModal} = useAppStore()
+  const {user, toggleModal, classes, setClass} = useAppStore()
   const {seats} = props.data
-
-  const seatsMap = new Map()
-  for (let i = 1; i <= 27; i++) {
-    seatsMap.set(i, SpotStatus.AVAILABLE)
-  }
-
-  seats.forEach((item) => {
-    seatsMap.set(item.seat, SpotStatus.RESERVED)
-  })
   
-  const initialValues: SpotStatus[] = Array.from(seatsMap.values())
   const [userPackages, setUserPackages] = useState<IUserPackage[]>([])
-  const [bookingItems, setBookingItems] = useState(initialValues)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  useEffect(() => {
+    if (!classes[params.id as string]?.bookedSeats) {
+      const seatsMap = new Map()
+      const seatNumbers = props.data.classInfo.type === EClassType.Barre ? 14 : 17
+      for (let i = 1; i <= seatNumbers; i++) {
+        seatsMap.set(i, SpotStatus.AVAILABLE)
+      }
+
+      seats.forEach((item) => {
+        seatsMap.set(item.seat, SpotStatus.RESERVED)
+      })
+
+      const initialValues: SpotStatus[] = Array.from(seatsMap.values())
+
+      setClass(params.id as string, initialValues)
+    }
+  }, [])
+
+  const bookingItems = classes[params.id as string]?.bookedSeats || []
+
   const handleClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
-    const newItems = initialValues.map((item, i) => {
+    const newItems = bookingItems.map((item, i) => {
       if (i === index) {
         if (item === SpotStatus.AVAILABLE) {
           item = SpotStatus.SELECTED
@@ -49,7 +58,7 @@ export default function SpotBookingForm(props: Props) {
 
       return item
     })
-    setBookingItems(newItems)
+    setClass(params.id as string, newItems)
   }
 
   const handleBookClick = async (event: React.MouseEvent<HTMLElement>) => {
@@ -75,7 +84,21 @@ export default function SpotBookingForm(props: Props) {
           },
         })
         if (response.ok) {
-          router.push('/clase-reservada')
+          const index = bookingItems.findIndex((item) => item === SpotStatus.SELECTED)
+          const newItems = bookingItems.map((item, i) => {
+            if (i === index) {
+              if (item === SpotStatus.SELECTED) {
+                item = SpotStatus.RESERVED
+              } else {
+                item = SpotStatus.AVAILABLE
+              }
+            }
+      
+            return item
+          })
+
+          setClass(params.id as string, newItems)
+          router.replace('/clase-reservada')
         }
       } catch(e) {
         setIsSubmitting(false)
@@ -99,8 +122,6 @@ export default function SpotBookingForm(props: Props) {
       fetchUserPackages()
     }
   }, [user])
-
-  console.log(user)
 
   return (
     <div className="md:w-auto md:mx-12">

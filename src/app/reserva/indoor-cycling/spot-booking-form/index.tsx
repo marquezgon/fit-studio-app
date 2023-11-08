@@ -124,7 +124,7 @@ export default function SpotBookingForm(props: Props) {
       <div className="flex justify-center pb-4 md:pt-8">
         <p className="text-2xl uppercase">{props.data.classInfo.coach}</p>
       </div>
-      <div className="grid grid-cols-7 gap-2 justify-center px-16">
+      <div className="grid grid-cols-7 gap-2 justify-center md:px-16">
         <div />
         <div />
         <div />

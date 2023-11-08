@@ -123,7 +123,7 @@ export default function SpotBookingForm(props: Props) {
         <p className="text-lg uppercase font-light">{props.data.classInfo.type}</p>
         <p className="text-2xl uppercase">{props.data.classInfo.coach}</p>
       </div>
-      <div className="grid grid-cols-5 gap-3 justify-center px-16" style={{ paddingLeft: '6rem', paddingRight: '6rem' }}>
+      <div className="grid grid-cols-5 gap-3 justify-center md:px-16">
         <div />
         <div>
           <Spot text={'3'} index={2} handleClick={handleClick} status={bookingItems[2]} disabled={bookingItems[2] !== SpotStatus.AVAILABLE} />

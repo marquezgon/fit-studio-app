@@ -9,7 +9,8 @@ import {InputField, PhoneField} from '../fields'
 import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
 import {ISignInForm, ModalProps, ModalType} from '@/app/types'
-import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
+import {CognitoIdentityProviderClient, GetUserCommand} from '@aws-sdk/client-cognito-identity-provider'
+import {errorMessages} from '@/app/utils'
 
 const SigninSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -18,6 +19,7 @@ const SigninSchema = Yup.object().shape({
 
 export default function SignInModal(props: ModalProps) {
   const {toggleModal, setUser} = useAppStore()
+  const [error, setError] = React.useState<null | string>(null)
   const handleSubmit = async (values: ISignInForm, actions: any) => {
     const newValues = {
       ...values,
@@ -33,8 +35,8 @@ export default function SignInModal(props: ModalProps) {
           'Content-Type': 'application/json'
         },
       })
+      const sessionInfo = await response.json()
       if (response.ok) {
-        const sessionInfo = await response.json()
         localStorage.setItem('zeal_session', JSON.stringify(sessionInfo))
         const cognitoClient = new CognitoIdentityProviderClient({region: 'us-east-1'})
         
@@ -58,6 +60,9 @@ export default function SignInModal(props: ModalProps) {
           ...userAttributes
         })
         toggleModal(null)
+      } else {
+        console.log(sessionInfo)
+        setError(errorMessages[sessionInfo.error as string])
       }
     } catch(e) {
       console.log(e)
@@ -105,15 +110,18 @@ export default function SignInModal(props: ModalProps) {
                     <div className='py-2'>
                       <Field name="password" type="password" placeholder="Contraseña" label="Password" component={InputField} />
                     </div>
-                    <div className='pt-2'>
-                      <Link
-                        href="#" onClick={() => toggleModal(ModalType.SIGN_UP)}
-                        className='hover:underline text-gray-950'
-                      >
-                        ¿No tienes una cuenta? Regístrate aquí
-                      </Link>
-                    </div>
-                    <div className='flex flex-row pt-6 justify-end gap-8'>
+                    {error && (
+                      <p className='text-orange-700 pb-1'>{error}</p>
+                    )}
+                    <div className='flex flex-row items-center pt-4 justify-between 2'>
+                      <div>
+                        <Link
+                          href="#" onClick={() => toggleModal(ModalType.SIGN_UP)}
+                          className='hover:underline text-gray-950 sm:text-[.92rem]'
+                        >
+                          ¿No tienes una cuenta? Regístrate aquí
+                        </Link>
+                      </div>
                       <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>
                         Log In
                       </Button>

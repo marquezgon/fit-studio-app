@@ -12,6 +12,7 @@ import {useAppStore} from '@/app/store'
 import 'react-international-phone/style.css'
 import {ISignUpForm, ModalProps, ModalType} from '@/app/types'
 import Link from 'next/link'
+import { errorMessages } from '@/app/utils'
 
 const SignupSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -28,6 +29,7 @@ const shoeSizes = ['30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '
 
 export default function SignUpModal(props: ModalProps) {
   const {toggleModal} = useAppStore()
+  const [error, setError] = React.useState<null | string>(null)
   const handleSubmit = async (values: ISignUpForm, actions) => {
     const newValues = {
       ...values,
@@ -46,6 +48,9 @@ export default function SignUpModal(props: ModalProps) {
       if (response.ok) {
         sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
         toggleModal(ModalType.SIGN_IN)
+      } else {
+        const sessionInfo = await response.json()
+        setError(errorMessages[sessionInfo.error as string])
       }
     } catch(e) {
       console.log(e)
@@ -205,11 +210,20 @@ export default function SignUpModal(props: ModalProps) {
                         )}
                       </Field>
                     </div>
-                    <div className='pt-2'>
-                      <Link href="#" onClick={() => toggleModal(ModalType.SIGN_IN)} className='hover:underline'>¿Ya tienes una cuenta? Inicia sesión aquí</Link>
-                    </div>
+                    {error && (
+                      <p className='text-orange-700 pb-1'>{error}</p>
+                    )}
                     {/* <Input inputRef={inputRef}/> */}
-                    <div className='flex flex-row pt-6 justify-end gap-8'>
+                    <div className='flex flex-row items-center pt-4 justify-between 2'>
+                      <div>
+                        <Link
+                          href="#"
+                          onClick={() => toggleModal(ModalType.SIGN_IN)}
+                          className='hover:underline text-gray-950 sm:text-[.92rem]'
+                        >
+                          ¿Ya tienes una cuenta? Inicia sesión aquí
+                        </Link>
+                      </div>
                       <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>
                         Registrarse
                       </Button>

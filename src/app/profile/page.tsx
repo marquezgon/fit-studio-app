@@ -5,11 +5,12 @@ import {useEffect, useState} from 'react'
 import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from '@nextui-org/react'
 import {User} from 'react-feather'
 import {useAppStore} from '@/app/store'
-import { IClass, IPackage } from '../types'
+import {IClassInfo, IUserPackage} from '../types'
+import {DateTime} from 'luxon'
 
 interface IClassesAndPackages {
-  classes: IClass[]
-  userPackages: IPackage[]
+  classes: IClassInfo[]
+  userPackages: IUserPackage[]
 }
 
 export default function Profile() {
@@ -33,18 +34,16 @@ export default function Profile() {
     }
   }, [user])
 
-  console.log(classesAndPackages)
-
   return (
     <div className="container mx-auto">
-      <div className="flex flex-col items-center pt-8 md:pt-12">
+      <div className="hidden md:flex flex-col items-center pt-8 md:pt-12">
         <img
           src="/logo-black-2.png"
           alt="Zeal Studio Logo"
           width={200}
         />
         <div className="w-3/4 lg:w-3/5 text-center pt-8">
-          <h3 className='text-sm font-[200]'>
+          <h3 className='te text-sm font-[200]'>
             MOTIVATION IS WHAT GETS YOU STARTED, COMMITMENT IS WHAT KEEPS YOU GOING.
           </h3>
           <h3 className='text-sm font-[200]'>
@@ -52,42 +51,68 @@ export default function Profile() {
           </h3>
         </div>
       </div>
-      <div className="pt-8">
+      <div className="pt-8 md:pt-12 w-full px-2 md:px-8">
         <p className='uppercase flex items-center pb-4'>
           <User className='mr-2' size={36} />{user?.firstName} {user?.lastName}
         </p>
-        <Table removeWrapper aria-label="Example static collection table">
+        <Table removeWrapper aria-label="Clases">
           <TableHeader>
-            <TableColumn>STATUS</TableColumn>
             <TableColumn>DISCIPLINE</TableColumn>
             <TableColumn>SPOT</TableColumn>
             <TableColumn>DATE</TableColumn>
+            <TableColumn>TIME</TableColumn>
+            <TableColumn>COACH</TableColumn>
           </TableHeader>
           <TableBody>
-            <TableRow key="1">
-              <TableCell>Tony Reichert</TableCell>
-              <TableCell>CEO</TableCell>
-              <TableCell>Active</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="2">
-              <TableCell>Zoey Lang</TableCell>
-              <TableCell>Technical Lead</TableCell>
-              <TableCell>Paused</TableCell>
-              <TableCell>Paused</TableCell>
-            </TableRow>
-            <TableRow key="3">
-              <TableCell>Jane Fisher</TableCell>
-              <TableCell>Senior Developer</TableCell>
-              <TableCell>Active</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell>William Howard</TableCell>
-              <TableCell>Community Manager</TableCell>
-              <TableCell>Vacation</TableCell>
-              <TableCell>Vacation</TableCell>
-            </TableRow>
+            {classesAndPackages.classes.map((bookedClass) => (
+              <TableRow key={bookedClass.id}>
+                <TableCell>
+                  <p className='text-xs md:text-base text-black'>{bookedClass.type === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'}</p>
+                </TableCell>
+                <TableCell>
+                  <p className='text-xs md:text-base text-black'>{bookedClass.seat}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="text-xs md:text-base text-black">
+                    {DateTime.fromISO(bookedClass.date!).setLocale('es').toFormat("EEE d / LLL / yy")}
+                  </p>
+                </TableCell>
+                <TableCell>
+                  <p className="text-xs md:text-base text-black">{DateTime.fromISO(bookedClass.date!).toFormat("t")}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="text-xs md:text-base text-black uppercase">{bookedClass.coach}</p>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
+      <div className="pt-16 md:pt-20 w-full px-2 md:px-8">
+        <Table removeWrapper aria-label="Paquetes">
+          <TableHeader>
+            <TableColumn>PACK</TableColumn>
+            <TableColumn>EXPIRATION DATE</TableColumn>
+            <TableColumn>CLASSES LEFT</TableColumn>
+          </TableHeader>
+          <TableBody>
+            {classesAndPackages.userPackages.map((pack) => (
+              <TableRow key={pack.id}>
+                <TableCell>
+                  <p className='text-xs md:text-base text-black uppercase'>
+                    {pack.amount} {`${pack.amount == 1 ? 'class' : 'classes'} pack`}
+                  </p>
+                </TableCell>
+                <TableCell>
+                  <p className='text-xs md:text-base text-black'>{DateTime.fromISO(pack.expires_at).setLocale('es').toFormat("d / LLL / yy")}</p>
+                </TableCell>
+                <TableCell>
+                  <p className="text-xs md:text-base text-black">
+                    {pack.amount}
+                  </p>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </div>

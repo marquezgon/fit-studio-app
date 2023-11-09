@@ -4,7 +4,8 @@ export async function GET(request: Request, { params }: { params: { id: string }
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
-    }
+    },
+    cache: 'no-store'
   })
   const jsonRes = await res.json()
 

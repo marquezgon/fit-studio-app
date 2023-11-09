@@ -20,6 +20,9 @@ export interface IClassInfo {
   id: string
   userId: string
   seat: number
+  type?: string
+  coach?: string
+  date?: string
 }
 
 export enum EClassType {

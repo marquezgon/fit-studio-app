@@ -153,6 +153,9 @@ export default function App() {
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="profile">
+                <Link color='foreground' href='/profile'>My Profile</Link>
+              </DropdownItem>
               <DropdownItem key="logout" onClick={() => handleSignOut()}>
                 Log Out
               </DropdownItem>
@@ -174,6 +177,50 @@ export default function App() {
         <NavbarMenuToggle className={styles.navbarMenuToggle}/>
       </NavbarContent>
       <NavbarMenu>
+      {user ? (
+          <>
+            <NavbarMenuItem>
+              <Link size='lg' color='foreground' href='/profile'>My Profile</Link>
+            </NavbarMenuItem>
+            <NavbarMenuItem>
+              <Link
+                className="w-full"
+                color='foreground'
+                onClick={() => handleSignOut()}
+                size="lg"
+                href="#"
+              >
+                Log Out
+              </Link>
+            </NavbarMenuItem>
+          </>
+        ) : (
+          <NavbarMenuItem>
+            <Link
+              className="w-full"
+              color='foreground'
+              onClick={() => toggleModal(ModalType.SIGN_IN)}
+              size="lg"
+              href="#"
+            >
+              Log In
+            </Link>
+          </NavbarMenuItem>
+        )}
+        {!user && (
+          <NavbarMenuItem>
+            <Link
+              className="w-full"
+              color='foreground'
+              onClick={() => toggleModal(ModalType.SIGN_UP)}
+              size="lg"
+              href="#"
+            >
+              Registrarse
+            </Link>
+          </NavbarMenuItem>
+        )}
+        <Divider />
         <NavbarMenuItem>
           <Link
             className="w-full"
@@ -244,45 +291,6 @@ export default function App() {
             Contact
           </Link>
         </NavbarMenuItem>
-        <Divider />
-        {user ? (
-          <NavbarMenuItem>
-            <Link
-              className="w-full"
-              color='foreground'
-              onClick={() => handleSignOut()}
-              size="lg"
-              href="#"
-            >
-              Cerrar Sesión
-            </Link>
-          </NavbarMenuItem>
-        ) : (
-          <NavbarMenuItem>
-            <Link
-              className="w-full"
-              color='foreground'
-              onClick={() => toggleModal(ModalType.SIGN_IN)}
-              size="lg"
-              href="#"
-            >
-              Iniciar Sesión
-            </Link>
-          </NavbarMenuItem>
-        )}
-        {!user && (
-          <NavbarMenuItem>
-            <Link
-              className="w-full"
-              color='foreground'
-              onClick={() => toggleModal(ModalType.SIGN_UP)}
-              size="lg"
-              href="#"
-            >
-              Registrarse
-            </Link>
-          </NavbarMenuItem>
-        )}
       </NavbarMenu>
       {modal === ModalType.SIGN_IN && <SignInModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}

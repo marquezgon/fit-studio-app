@@ -97,7 +97,7 @@ export default function Profile() {
           </TableHeader>
           <TableBody>
             {classesAndPackages.userPackages.map((pack) => (
-              <TableRow key={pack.id}>
+              <TableRow key={pack.package_id}>
                 <TableCell>
                   <p className='text-xs md:text-base text-black uppercase'>
                     {pack.amount} {`${pack.amount == 1 ? 'class' : 'classes'} pack`}

@@ -74,7 +74,10 @@ export default function SpotBookingForm(props: Props) {
         const body = {
           userId: user.id,
           sessionId: packageToUse.package_id,
-          seat: seat
+          seat: seat,
+          type: 'indoor-cycling',
+          date: props.data.classInfo.date,
+          coach: props.data.classInfo.coach
         }
         const response = await fetch(`/api/indoor-cycling/reservar-clase/${params.id}`, {
           method: 'POST',

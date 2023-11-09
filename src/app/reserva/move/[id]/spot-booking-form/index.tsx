@@ -73,8 +73,12 @@ export default function SpotBookingForm(props: Props) {
         const body = {
           userId: user.id,
           sessionId: packageToUse.package_id,
-          seat: seat
+          seat: seat,
+          type: 'move',
+          date: props.data.classInfo.date,
+          coach: props.data.classInfo.coach
         }
+
         const response = await fetch(`/api/move/reservar-clase/${params.id}`, {
           method: 'POST',
           body: JSON.stringify(body),

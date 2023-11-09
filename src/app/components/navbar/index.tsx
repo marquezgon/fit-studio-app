@@ -10,6 +10,7 @@ import {
   NavbarMenuToggle,
 } from '@nextui-org/navbar'
 import Image from 'next/image'
+import { ToastContainer } from 'react-toastify'
 import {Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, NavbarItem, useDisclosure} from '@nextui-org/react'
 import SignInModal from '@/app/components/signin-modal'
 import SignUpModal from '@/app/components/signup-modal'
@@ -18,8 +19,9 @@ import ConfirmCodeModal from '@/app/components/confirm-code-modal'
 import { CognitoIdentityProviderClient, GetUserCommand } from '@aws-sdk/client-cognito-identity-provider'
 import {Link} from '@nextui-org/link'
 import {useAppStore} from '@/app/store'
-import styles from './style.module.css'
 import {ModalType} from '@/app/types'
+import 'react-toastify/dist/ReactToastify.css'
+import styles from './style.module.css'
 
 export default function App() {
   const {isOpen, onOpen, onOpenChange} = useDisclosure()
@@ -286,6 +288,7 @@ export default function App() {
       {modal === ModalType.SIGN_UP && <SignUpModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.CONFIRM_CODE && <ConfirmCodeModal isOpen={isOpen} onOpenChange={onOpenChange} />}
       {modal === ModalType.SELECT_PACKAGE && <SelectPackageModal isOpen={isOpen} onOpenChange={onOpenChange} />}
+      <ToastContainer />
     </Navbar>
   );
 }

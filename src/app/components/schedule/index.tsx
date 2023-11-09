@@ -39,13 +39,13 @@ export default function Schedule(props: { page: string }) {
     fetchClasses();
   }, [timeframe])
 
-  const firstDay = <p className='uppercase text-[0.8rem] md:text-base'>{firstDayDate.toFormat('EEE dd MMM')}</p>
-  const secondDay = <p className='uppercase text-[0.8rem] md:text-base'>{secondDayDate.toFormat('EEE dd MMM')}</p>
-  const thirdDay = <p className='uppercase text-[0.8rem] md:text-base'>{thirdDayDate.toFormat('EEE dd MMM')}</p>
-  const fourthDay = <p className='uppercase text-[0.8rem] md:text-base'>{fourthDayDate.toFormat('EEE dd MMM')}</p>
-  const fifthDay = <p className='uppercase text-[0.8rem] md:text-base'>{fifthDayDate.toFormat('EEE dd MMM')}</p>
-  const sixthDay = <p className='uppercase text-[0.8rem] md:text-base'>{sixthDayDate.toFormat('EEE dd MMM')}</p>
-  const seventhDay = <p className='uppercase text-[0.8rem] md:text-base'>{seventhDayDate.toFormat('EEE dd MMM')}</p>
+  const firstDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{firstDayDate.toFormat('EEE dd MMM')}</p>
+  const secondDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{secondDayDate.toFormat('EEE dd MMM')}</p>
+  const thirdDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{thirdDayDate.toFormat('EEE dd MMM')}</p>
+  const fourthDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{fourthDayDate.toFormat('EEE dd MMM')}</p>
+  const fifthDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{fifthDayDate.toFormat('EEE dd MMM')}</p>
+  const sixthDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{sixthDayDate.toFormat('EEE dd MMM')}</p>
+  const seventhDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{seventhDayDate.toFormat('EEE dd MMM')}</p>
 
   const title = props.page === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'
 
@@ -64,7 +64,7 @@ export default function Schedule(props: { page: string }) {
           </Button>
         </div>
         <div>
-          <h3 className='text-xl font-[300] uppercase'>{title}</h3>
+          <h3 className='text-xl font-[300] uppercase text-black'>{title}</h3>
         </div>
         <div>
             <Button

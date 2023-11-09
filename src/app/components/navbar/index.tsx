@@ -10,7 +10,7 @@ import {
   NavbarMenuToggle,
 } from '@nextui-org/navbar'
 import Image from 'next/image'
-import {Divider, useDisclosure} from '@nextui-org/react'
+import {Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, NavbarItem, useDisclosure} from '@nextui-org/react'
 import SignInModal from '@/app/components/signin-modal'
 import SignUpModal from '@/app/components/signup-modal'
 import SelectPackageModal from '@/app/components/select-package-modal'
@@ -66,6 +66,8 @@ export default function App() {
     }
   }, [])
 
+  console.log(user)
+
   const handleSignOut = async () => {
     try {
       const response = await fetch(`/api/sign-out`, {
@@ -100,7 +102,73 @@ export default function App() {
           />
         </Link>
       </NavbarBrand>
-      <NavbarContent justify="end">
+      <NavbarContent className="hidden lg:flex gap-8" justify="end">
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="https://zealstudio.mx">
+            Home
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="/">
+            Book
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="https://zealstudio.mx/home/#about">
+            Us
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="/shop" >
+            Shop
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="https://zealstudio.mx/home/#clients" >
+            Location
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="https://zealstudio.mx/home/#testimonials" >
+            Sacred Movement
+          </Link>
+        </NavbarItem>
+        <NavbarItem>
+          <Link style={{ color: 'white' }} className='uppercase font-extralight' href="https://zealstudio.mx/home/#contact" >
+            Contact
+          </Link>
+        </NavbarItem>
+        {user ? (
+          <Dropdown placement="bottom-end">
+            <DropdownTrigger>
+              <Avatar
+                isBordered
+                as="button"
+                className="transition-transform"
+                style={{ backgroundColor: 'white' }}
+                name={user.firstName.substring(0, 1) + user.lastName.substring(0, 1)}
+                size="sm"
+              />
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Profile Actions" variant="flat">
+              <DropdownItem key="logout" onClick={() => handleSignOut()}>
+                Log Out
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        ) : (
+          <NavbarItem>
+            <Button
+              className='uppercase'
+              style={{ backgroundColor: 'white' }}
+              onClick={() => toggleModal(ModalType.SIGN_IN)}
+            >
+              Log In
+            </Button>
+          </NavbarItem>
+        )}
+      </NavbarContent>
+      <NavbarContent className='lg:hidden' justify="end">
         <NavbarMenuToggle className={styles.navbarMenuToggle}/>
       </NavbarContent>
       <NavbarMenu>
@@ -108,10 +176,70 @@ export default function App() {
           <Link
             className="w-full"
             color='foreground'
+            href='https://zealstudio.mx'
+            size="lg"
+          >
+            Home
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
             href='/'
             size="lg"
           >
-            Inicio
+            Book
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='https://zealstudio.mx/home/#about'
+            size="lg"
+          >
+            Us
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='/shop'
+            size="lg"
+          >
+            Shop
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='https://zealstudio.mx/home/#clients'
+            size="lg"
+          >
+            Location
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='https://zealstudio.mx/home/#testimonials'
+            size="lg"
+          >
+            Sacred Movement
+          </Link>
+        </NavbarMenuItem>
+        <NavbarMenuItem>
+          <Link
+            className="w-full"
+            color='foreground'
+            href='https://zealstudio.mx/home/#contact'
+            size="lg"
+          >
+            Contact
           </Link>
         </NavbarMenuItem>
         <Divider />

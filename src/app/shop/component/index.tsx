@@ -16,7 +16,7 @@ export default function ZealPackages(props: { packages: IPackage[] }) {
   }
 
   return (
-    <div className='pt-12 w-6/7 md:w-3/5 lg:w-2/5 flex flex-col items-center'>
+    <div className='pt-12 w-11/12 md:w-3/5 lg:w-2/5 flex flex-col items-center'>
       <div>
         <img
           src="/logo-black-2.png"
@@ -29,7 +29,7 @@ export default function ZealPackages(props: { packages: IPackage[] }) {
         {props.packages.map((pack) => (
           <Link key={pack.id} href={user ? pack.url : '#'} onClick={() => handleClick()}>
             <div className="grid grid-cols-3 grid-gap-3 w-full border-solid border-2 rounded-lg py-1 text-center mb-4 border-slate-900 text-slate-900 hover:text-white hover:bg-black">
-              <p className='text-lg uppercase'>{pack.name}</p>
+              <p className='text-base md:text-lg uppercase'>{pack.name}</p>
               <p className='text-lg'>${pack.price.toString().substring(0, pack.price.toString().length - 2)}.00</p>
               <p className='text-sm'>* {pack.expires_in} días de vigencia</p>
             </div>

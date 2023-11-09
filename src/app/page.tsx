@@ -7,7 +7,7 @@ export default function Reserva() {
     <div className='lg:grid lg:grid-cols-2 lg:h-screen'>
       <Link href='/reserva/indoor-cycling'>
         <div className='relative'>
-          <p className='uppercase font-thin absolute z-10 text-white text-xl top-[40%] left-[30%] md:hidden'>Indoor Cycling</p>
+          <p className='uppercase font-thin absolute z-10 text-white text-xl top-[40%] left-[30%] md:left-[22%] md:top-[36%] md:text-5xl'>Indoor Cycling</p>
           <img
             className='hidden md:block grayscale hover:grayscale-0'
             src='/indoor-cycling.jpg'
@@ -22,7 +22,7 @@ export default function Reserva() {
       </Link>
       <Link href='/reserva/move'>
         <div className='relative'>
-          <p className='uppercase font-thin absolute z-10 text-white text-xl top-[40%] left-[40%] md:hidden'>Move</p>
+          <p className='uppercase font-thin absolute z-10 text-white text-xl top-[40%] left-[40%] md:left-[42%] md:top-[36%] md:text-5xl'>Move</p>
           <img
             className='hidden md:block grayscale hover:grayscale-0'
             src='/move.jpg'

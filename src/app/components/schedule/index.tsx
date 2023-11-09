@@ -12,7 +12,7 @@ export default function Schedule(props: { page: string }) {
   const [timeframe, setTimeframe] = useState(0)
   const [classes, setClasses] = useState<IClassSorted>({})
 
-  const firstDayDate = DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
+  const firstDayDate = timeframe === 0 ? DateTime.now().setLocale('es') : DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
   const secondDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 1 }).setLocale('es')
   const thirdDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 2 }).setLocale('es')
   const fourthDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 3 }).setLocale('es')
@@ -24,8 +24,8 @@ export default function Schedule(props: { page: string }) {
 
   useEffect(() => {
     const fetchClasses = async () => {
-      const startDate = firstDayDate.toUTC()
-      const endDate = seventhDayDate.endOf('day').toUTC()
+      const startDate = firstDayDate.toISO()
+      const endDate = seventhDayDate.endOf('day').toISO()
       const response = await fetch(`/api/${props.page}/horarios?start=${startDate}&end=${endDate}`)
       const data = await response.json()
 

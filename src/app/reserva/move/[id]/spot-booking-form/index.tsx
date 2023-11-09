@@ -132,21 +132,21 @@ export default function SpotBookingForm(props: Props) {
       <div className="flex justify-center pb-8 md:pb-10">
         <div className="flex items-center uppercase px-6">
           <DummySpot status={SpotStatus.AVAILABLE} />
-          <span className="pl-2">Disponible</span>
+          <span className="pl-2 text-black">Disponible</span>
         </div>
         <div className="flex items-center uppercase px-6">
           <DummySpot status={SpotStatus.RESERVED} />
-          <span className="pl-2">Reservada</span>
+          <span className="pl-2 text-black">Reservada</span>
         </div>
       </div>
       <div className="flex justify-center pb-4">
-        <p className="text-sm uppercase">
+        <p className="text-sm uppercase text-black">
           {DateTime.fromISO(props.data.classInfo.date).setLocale('es').toFormat("dd / LLL / yyyy | EEEE t a")}
         </p>
       </div>
       <div className="flex justify-center pb-4 md:pt-4 flex-col items-center">
-        <p className="text-lg uppercase font-light">{props.data.classInfo.type}</p>
-        <p className="text-2xl uppercase">{props.data.classInfo.coach}</p>
+        <p className="text-lg uppercase font-light text-black">{props.data.classInfo.type}</p>
+        <p className="text-2xl uppercase text-black">{props.data.classInfo.coach}</p>
       </div>
       <div className="grid grid-cols-5 gap-3 justify-center md:px-16">
         <div />

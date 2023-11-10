@@ -9,6 +9,7 @@ import {
   NavbarMenuItem,
   NavbarMenuToggle,
 } from '@nextui-org/navbar'
+import {useRouter} from 'next/navigation'
 import Image from 'next/image'
 import { ToastContainer } from 'react-toastify'
 import {Avatar, Button, Divider, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger, NavbarItem, useDisclosure} from '@nextui-org/react'
@@ -24,6 +25,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import styles from './style.module.css'
 
 export default function App() {
+  const router = useRouter()
   const {isOpen, onOpen, onOpenChange} = useDisclosure()
   const {toggleModal, modal, user, setUser} = useAppStore()
 
@@ -82,6 +84,7 @@ export default function App() {
       })
       if (response.ok) {
         localStorage.removeItem('zeal_session')
+        router.push('/login')
         setUser(null)
         // sessionStorage.setItem('zeal_temp_phone', values.phoneNumber)
       }
@@ -163,13 +166,9 @@ export default function App() {
           </Dropdown>
         ) : (
           <NavbarItem>
-            <Button
-              className='uppercase'
-              style={{ backgroundColor: 'white' }}
-              onClick={() => toggleModal(ModalType.SIGN_IN)}
-            >
-              Log In
-            </Button>
+            <Link style={{ color: 'black', }} className='bg-white text-black py-2.5 px-5 uppercase rounded-2xl text-sm' href="/login" >
+            Log In
+            </Link>
           </NavbarItem>
         )}
       </NavbarContent>
@@ -199,9 +198,8 @@ export default function App() {
             <Link
               className="w-full"
               color='foreground'
-              onClick={() => toggleModal(ModalType.SIGN_IN)}
               size="lg"
-              href="#"
+              href="/login"
             >
               Log In
             </Link>

@@ -84,7 +84,7 @@ export default function ConfirmCodeModal(props: ModalProps) {
                       <Field name="code" placeholder="123456" label="Ingresa el código que recibiste vía SMS" component={InputField} />
                     </div>
                     {error && (
-                      <p className='text-orange-700	'>{error}</p>
+                      <p className='pb-1' style={{ color: 'rgb(243, 18, 96)' }}>{error}</p>
                     )}
                     <div className='flex flex-row pt-6 pb-2 justify-end gap-8'>
                       <Button style={{ backgroundColor: '#232321', color: 'white' }} type='submit' isLoading={isSubmitting}>

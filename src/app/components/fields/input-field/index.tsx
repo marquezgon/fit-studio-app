@@ -14,7 +14,7 @@ export default function InputField({
       <Input
         variant="bordered"
         isInvalid={isInvalid as boolean}
-        color={isInvalid ? "danger" : "default"}
+        style={{ color: isInvalid ? 'rgb(243, 18, 96)' : 'black' }}
         errorMessage={isInvalid && `${errors[field.name]}`}
         {...field} {...props}
       />

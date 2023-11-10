@@ -211,7 +211,7 @@ export default function SignUpModal(props: ModalProps) {
                       </Field>
                     </div>
                     {error && (
-                      <p className='text-orange-700 pb-1'>{error}</p>
+                      <p className='pb-1' style={{ color: 'rgb(243, 18, 96)' }}>{error}</p>
                     )}
                     {/* <Input inputRef={inputRef}/> */}
                     <div className='flex flex-row items-center pt-4 justify-between 2'>

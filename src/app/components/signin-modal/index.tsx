@@ -23,7 +23,7 @@ export default function SignInModal(props: ModalProps) {
   const handleSubmit = async (values: ISignInForm, actions: any) => {
     const newValues = {
       ...values,
-      phoneNumber: values.phoneNumber.replaceAll(' ', '')
+      phoneNumber: values.phoneNumber.replaceAll(' ', '').replaceAll('(', '').replaceAll(')', '').replaceAll('-', '')
     }
 
     try {

@@ -48,9 +48,9 @@ export default function SpotBookingForm(props: Props) {
     }
   }, [])
 
-  const bookingItems = classes[params.id as string]?.bookedSeats || []
-
   const handleClick = (event: React.MouseEvent<HTMLElement>, index: number) => {
+    const bookingItems = classes[params.id as string]?.bookedSeats || []
+    console.log(bookingItems)
     const newItems = bookingItems.map((item, i) => {
       if (i === index) {
         if (item === SpotStatus.AVAILABLE) {
@@ -58,10 +58,15 @@ export default function SpotBookingForm(props: Props) {
         } else {
           item = SpotStatus.AVAILABLE
         }
+      } else {
+        if (item === SpotStatus.SELECTED) {
+          item = SpotStatus.AVAILABLE
+        }
       }
 
       return item
     })
+    console.log(newItems)
     setClass(params.id as string, newItems)
   }
 
@@ -71,6 +76,7 @@ export default function SpotBookingForm(props: Props) {
     } else if (user && userPackages.length > 0) {
       setIsSubmitting(true)
       const packageToUse = userPackages[0]
+      const bookingItems = classes[params.id as string]?.bookedSeats || []
       const seat = bookingItems.findIndex(item => item === SpotStatus.SELECTED) + 1
 
       try {
@@ -159,8 +165,9 @@ export default function SpotBookingForm(props: Props) {
   }, [user])
 
   const renderForm = () => {
+    const bookingItems = classes[params.id as string]?.bookedSeats || []
     return (
-      <div className="w-full lg:w-4/5 mx-12">
+      <div className="w-11/12 lg:w-4/5">
         <div className="flex justify-center pb-8 md:pb-10">
           <div className="flex items-center uppercase px-6">
             <DummySpot status={SpotStatus.AVAILABLE} />
@@ -307,7 +314,7 @@ export default function SpotBookingForm(props: Props) {
   if (isAdmin) {
     return (
       <Tabs>
-        <Tab key="spots" title="Spots">
+        <Tab key="spots" title="Spots" className='px-0'>
           {renderForm()}
         </Tab>
         <Tab key="list" title="List">

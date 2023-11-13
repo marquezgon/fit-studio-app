@@ -85,6 +85,10 @@ export default function SpotBookingForm(props: Props) {
         } else {
           item = SpotStatus.AVAILABLE
         }
+      } else {
+        if (item === SpotStatus.SELECTED) {
+          item = SpotStatus.AVAILABLE
+        }
       }
 
       return item

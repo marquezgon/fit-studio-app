@@ -160,7 +160,7 @@ export default function SpotBookingForm(props: Props) {
 
   const renderForm = () => {
     return (
-      <div className="md:w-auto md:mx-12">
+      <div className="w-full lg:w-4/5 mx-12">
         <div className="flex justify-center pb-8 md:pb-10">
           <div className="flex items-center uppercase px-6">
             <DummySpot status={SpotStatus.AVAILABLE} />
@@ -174,81 +174,47 @@ export default function SpotBookingForm(props: Props) {
         <div className="flex justify-center pb-4">
           <p className="text-sm uppercase text-black">
             {DateTime.fromISO(props.data.classInfo.date).setLocale('es').toFormat("dd / LLL / yyyy | EEEE t a")}
+            {/* 07 / SEP  / 2023 | JUEVES 7:00 AM  */}
           </p>
         </div>
-        <div className="flex justify-center pb-4 md:pt-4 flex-col items-center">
-          <p className="text-lg uppercase font-light text-black">{props.data.classInfo.type}</p>
+        <div className="flex justify-center flex-col items-center pb-4 md:pt-8">
           <p className="text-2xl uppercase text-black">{props.data.classInfo.coach}</p>
+          {props.data.classInfo.description && <p className="text-sm uppercase text-black">{props.data.classInfo.description}</p>}
         </div>
-        <div className="grid grid-cols-5 gap-3 justify-center md:px-16">
+        <div className="grid grid-cols-7 gap-2 justify-center md:px-16">
+          <div />
+          <div />
+          <div />
+          <div />
           <div />
           <div>
-            <Spot text={'3'} index={2} handleClick={handleClick} status={bookingItems[2]} disabled={bookingItems[2] !== SpotStatus.AVAILABLE} />
+            <Spot text={'6'} index={5} handleClick={handleClick} status={bookingItems[5]} disabled={bookingItems[5] !== SpotStatus.AVAILABLE} />
           </div>
           <div>
-            <Spot text={'2'} index={1} handleClick={handleClick} status={bookingItems[1]} disabled={bookingItems[1] !== SpotStatus.AVAILABLE} />
+            <Spot text={'7'} index={6} handleClick={handleClick} status={bookingItems[6]} disabled={bookingItems[6] !== SpotStatus.AVAILABLE} />
           </div>
-          <div>
+          {/* --------------------------------------------------------------------------------------------------------- */}
+          <div className='flex justify-end'>
             <Spot text={'1'} index={0} handleClick={handleClick} status={bookingItems[0]} disabled={bookingItems[0] !== SpotStatus.AVAILABLE} />
           </div>
-          <div />
-          {/* --------------------------------------------------------------------------------------------------------- */}
-          <div>
+          <div className='flex justify-end'>
+            <Spot text={'2'} index={1} handleClick={handleClick} status={bookingItems[1]} disabled={bookingItems[1] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'3'} index={2} handleClick={handleClick} status={bookingItems[2]} disabled={bookingItems[2] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
             <Spot text={'4'} index={3} handleClick={handleClick} status={bookingItems[3]} disabled={bookingItems[3] !== SpotStatus.AVAILABLE} />
           </div>
-          <div />
-          <div />
-          <div />
-          {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
-            <div>
-              <Spot text={'17'} index={16} handleClick={handleClick} status={bookingItems[16]} disabled={bookingItems[16] !== SpotStatus.AVAILABLE} />
-            </div>
-          ): (<div />)}
-          {/* --------------------------------------------------------------------------------------------------------- */}
-          <div>
+          <div className='flex justify-end'>
             <Spot text={'5'} index={4} handleClick={handleClick} status={bookingItems[4]} disabled={bookingItems[4] !== SpotStatus.AVAILABLE} />
           </div>
           <div />
           <div />
-          <div />
-          {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
-            <div>
-              <Spot text={'16'} index={15} handleClick={handleClick} status={bookingItems[15]} disabled={bookingItems[15] !== SpotStatus.AVAILABLE} />
-            </div>
-          ): (<div />)}
           {/* --------------------------------------------------------------------------------------------------------- */}
-          <div>
-            <Spot text={'6'} index={5} handleClick={handleClick} status={bookingItems[5]} disabled={bookingItems[5] !== SpotStatus.AVAILABLE} />
-          </div>
-          <div />
-          <div />
-          <div />
-          {(props.data.classInfo.type === EClassType.Yoga || props.data.classInfo.type === EClassType.YogaKids) ? (
-            <div>
-              <Spot text={'15'} index={14} handleClick={handleClick} status={bookingItems[14]} disabled={bookingItems[14] !== SpotStatus.AVAILABLE} />
-            </div>
-          ): (<div />)}
-          {/* --------------------------------------------------------------------------------------------------------- */}
-          <div>
-            <Spot text={'7'} index={6} handleClick={handleClick} status={bookingItems[6]} disabled={bookingItems[6] !== SpotStatus.AVAILABLE} />
-          </div>
-          <div />
-          <div />
-          <div />
-          <div>
-            <Spot text={'14'} index={13} handleClick={handleClick} status={bookingItems[13]} disabled={bookingItems[13] !== SpotStatus.AVAILABLE} />
-          </div>
-          {/* --------------------------------------------------------------------------------------------------------- */} 
           <div>
             <Spot text={'8'} index={7} handleClick={handleClick} status={bookingItems[7]} disabled={bookingItems[7] !== SpotStatus.AVAILABLE} />
           </div>
-          <div />
-          <div />
-          <div>
-            <Spot text={'13'} index={12} handleClick={handleClick} status={bookingItems[12]} disabled={bookingItems[12] !== SpotStatus.AVAILABLE} />
-          </div>
-          <div />
-          {/* --------------------------------------------------------------------------------------------------------- */}
           <div>
             <Spot text={'9'} index={8} handleClick={handleClick} status={bookingItems[8]} disabled={bookingItems[8] !== SpotStatus.AVAILABLE} />
           </div>
@@ -261,6 +227,65 @@ export default function SpotBookingForm(props: Props) {
           <div>
             <Spot text={'12'} index={11} handleClick={handleClick} status={bookingItems[11]} disabled={bookingItems[11] !== SpotStatus.AVAILABLE} />
           </div>
+          <div>
+            <Spot text={'13'} index={12} handleClick={handleClick} status={bookingItems[12]} disabled={bookingItems[12] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div />
+          {/* --------------------------------------------------------------------------------------------------------- */}
+          <div className='flex justify-end'>
+            <Spot text={'14'} index={13} handleClick={handleClick} status={bookingItems[13]} disabled={bookingItems[13] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'15'} index={14} handleClick={handleClick} status={bookingItems[14]} disabled={bookingItems[14] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'16'} index={15} handleClick={handleClick} status={bookingItems[15]} disabled={bookingItems[15] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'17'} index={16} handleClick={handleClick} status={bookingItems[16]} disabled={bookingItems[16] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'18'} index={17} handleClick={handleClick} status={bookingItems[17]} disabled={bookingItems[17] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'19'} index={18} handleClick={handleClick} status={bookingItems[18]} disabled={bookingItems[18] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div className='flex justify-end'>
+            <Spot text={'20'} index={19} handleClick={handleClick} status={bookingItems[19]} disabled={bookingItems[19] !== SpotStatus.AVAILABLE} />
+          </div>
+          {/* --------------------------------------------------------------------------------------------------------- */}
+          <div>
+            <Spot text={'21'} index={20} handleClick={handleClick} status={bookingItems[20]} disabled={bookingItems[20] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'22'} index={21} handleClick={handleClick} status={bookingItems[21]} disabled={bookingItems[21] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'23'} index={22} handleClick={handleClick} status={bookingItems[22]} disabled={bookingItems[22] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'24'} index={23} handleClick={handleClick} status={bookingItems[23]} disabled={bookingItems[23] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'25'} index={24} handleClick={handleClick} status={bookingItems[24]} disabled={bookingItems[24] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'26'} index={25} handleClick={handleClick} status={bookingItems[25]} disabled={bookingItems[25] !== SpotStatus.AVAILABLE} />
+          </div>
+          <div>
+            <Spot text={'27'} index={26} handleClick={handleClick} status={bookingItems[26]} disabled={bookingItems[26] !== SpotStatus.AVAILABLE} />
+          </div>
+          {/* --------------------------------------------------------------------------------------------------------- */}
+          {/* {bookingItems.map((item, i) => {
+            return (
+              <div
+                key={i}
+                className={classNames("flex", { "justify-end": ((i > 6 && i < 14) || i > 20 && i < 27) })}
+              >
+                <Spot text={(i + 1).toString()} index={i} handleClick={handleClick} status={item} disabled={item !== SpotStatus.AVAILABLE} />
+              </div>
+            )
+          })} */}
         </div>
         {bookingItems.includes(SpotStatus.SELECTED) && (
           <div className='pt-8 text-center'>

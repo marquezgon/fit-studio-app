@@ -145,8 +145,9 @@ export default function SpotBookingForm(props: Props) {
           {/* 07 / SEP  / 2023 | JUEVES 7:00 AM  */}
         </p>
       </div>
-      <div className="flex justify-center pb-4 md:pt-8">
+      <div className="flex justify-center flex-col items-center pb-4 md:pt-8">
         <p className="text-2xl uppercase text-black">{props.data.classInfo.coach}</p>
+        {props.data.classInfo.description && <p className="text-sm uppercase text-black">{props.data.classInfo.description}</p>}
       </div>
       <div className="grid grid-cols-7 gap-2 justify-center md:px-16">
         <div />

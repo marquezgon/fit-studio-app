@@ -27,12 +27,12 @@ export default function ClassCalendar(props: Props) {
                   ): (
                     <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
                   )}
+                  {openClass.type === EClassType.Special && (
+                    <p className='text-[0.6rem] md:text-sm'>{openClass.description}</p>
+                  )}
                   <p className='text-[0.5rem] md:text-base uppercase'>
                     {DateTime.fromISO(openClass.date).toFormat("t")}
                   </p>
-                  {openClass.type === EClassType.Special && (
-                    <p className='text-[0.6rem] md:text-base'>{openClass.description}</p>
-                  )}
                 </CardBody>
               </Card>
             </Link>

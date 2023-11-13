@@ -4,3 +4,10 @@ export interface IUser {
   lastName: string
   phoneNumber: string
 }
+interface CognitoUserInfo {
+  Name: string
+  Value: string
+}
+export interface CognitoUser {
+  user: CognitoUserInfo[]
+}

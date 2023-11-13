@@ -70,8 +70,6 @@ export default function App() {
     }
   }, [])
 
-  console.log(user)
-
   const handleSignOut = async () => {
     try {
       const response = await fetch(`/api/sign-out`, {

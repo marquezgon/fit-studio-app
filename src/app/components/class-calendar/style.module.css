@@ -12,7 +12,11 @@
   border: 2px solid #F7D26E;
 }
 
-.bgLight:hover {
+.bgYellow {
+  background-color: #F7D26E;
+}
+
+.bgYellow:hover, .bgLight:hover {
   background-color: #232321;
   color: white;
 }

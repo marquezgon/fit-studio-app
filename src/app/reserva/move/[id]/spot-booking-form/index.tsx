@@ -286,7 +286,7 @@ export default function SpotBookingForm(props: Props) {
   if (isAdmin) {
     return (
       <Tabs>
-        <Tab key="spots" title="Spots">
+        <Tab key="spots" title="Spots" className='px-0 w-full flex justify-center'>
           {renderForm()}
         </Tab>
         <Tab key="list" title="List">

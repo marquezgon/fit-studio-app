@@ -2,7 +2,7 @@
 'use client'
 
 import React from 'react'
-import {Button, Card, CardBody} from '@nextui-org/react'
+import {Button, Card, CardBody, Link} from '@nextui-org/react'
 import {Formik, Form, Field, FormikProps} from 'formik'
 import {useRouter} from 'next/navigation'
 import * as Yup from 'yup'
@@ -12,6 +12,7 @@ import {ISignInForm} from '@/app/types'
 import {InputField, PhoneField} from '@/app/components/fields'
 import {errorMessages} from '@/app/utils'
 import 'react-international-phone/style.css'
+import TextDivider from '@/app/components/text-divider'
 
 const SigninSchema = Yup.object().shape({
   phoneNumber: Yup.string().required('Campo requerido'),
@@ -23,6 +24,12 @@ export default function LogInComponent() {
   const {setUser} = useAppStore()
   const router = useRouter()
   const [error, setError] = React.useState<null | string>(null)
+  const [phoneNumber, setPhoneNumber] = React.useState<string>('')
+
+  React.useEffect(() => {
+    const presetPhoneNumber = sessionStorage.getItem('zeal_temp_phone') || ''
+    setPhoneNumber(presetPhoneNumber)
+  }, [phoneNumber])
 
   const handleSubmit = async (values: ISignInForm, actions: any) => {
     const newValues = {
@@ -77,13 +84,16 @@ export default function LogInComponent() {
     }
   }
 
+  console.log(phoneNumber)
+
   return (
     <Card>
       <CardBody>
         <Formik
+          enableReinitialize
           initialValues={{
             password: '',
-            phoneNumber: '',
+            phoneNumber: phoneNumber
           }}
           validationSchema={SigninSchema}
           onSubmit={handleSubmit}
@@ -96,7 +106,7 @@ export default function LogInComponent() {
                   alt="Zeal Studio Logo"
                   width={200}
                 />
-                <h3 className='text-xl font-[100] pt-6 pb-4 uppercase'>Iniciar Sesión</h3>
+                <h3 className='text-xl font-[100] pt-6 pb-4 uppercase'>Log In</h3>
               </div>
               <div className='py-2'>
               <PhoneField />
@@ -108,18 +118,21 @@ export default function LogInComponent() {
                 <p className='pb-1' style={{ color: 'rgb(243, 18, 96)' }}>{error}</p>
               )}
               <div className='flex pt-4 justify-end'>
-                {/* <div>
-                  <Link
-                    href="#" onClick={() => toggleModal(ModalType.SIGN_UP)}
-                    className='hover:underline text-gray-950 sm:text-[.92rem]'
-                  >
-                    ¿No tienes una cuenta? Regístrate aquí
-                  </Link>
-                </div> */}
                 <Button style={{ backgroundColor: '#232321' }} className='text-white w-full'  type='submit' isLoading={isSubmitting}>
-                  Log In
+                  Iniciar Sesión
                 </Button>
               </div>
+              <div className='py-4'>
+                <TextDivider text='¿No tienes una cuenta?' />
+              </div>
+              <Button
+                as={Link}
+                variant='bordered'
+                className='text-black w-full border-black hover:opacity-80'
+                href='/signup'
+              >
+                Registrarse
+              </Button>
             </Form>
           )}
         </Formik>

@@ -84,8 +84,6 @@ export default function LogInComponent() {
     }
   }
 
-  console.log(phoneNumber)
-
   return (
     <Card>
       <CardBody>

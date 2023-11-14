@@ -13,4 +13,5 @@ export interface IUserPackage {
   active: boolean
   amount: number
   expires_at: string
+  total_amount: number
 }

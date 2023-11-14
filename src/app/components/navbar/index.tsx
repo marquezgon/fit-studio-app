@@ -94,7 +94,7 @@ export default function App() {
   }
 
   return (
-    <Navbar disableAnimation isBordered className={styles.navbarContainer} maxWidth='full'>
+    <Navbar isBordered className={styles.navbarContainer} maxWidth='full'>
       <NavbarBrand>
         <Link href="/">
           <Image

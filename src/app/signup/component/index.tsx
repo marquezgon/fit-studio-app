@@ -20,8 +20,8 @@ const SignupSchema = Yup.object().shape({
   lastName: Yup.string().required('Campo requerido'),
   shoeSize: Yup.string().required('Campo requerido'),
   hasOwnShoes: Yup.string().required().oneOf(["si", "no"]),
-  password: Yup.string().required('Campo requerido'),
-  confirmPassword: Yup.string().required('Campo requerido').oneOf([Yup.ref('password')], 'Contraseñas no coinciden')
+  password: Yup.string().required('Campo requerido').min(6,'Contraseña muy corta. Mínimo 6 caracteres'),
+  confirmPassword: Yup.string().required('Campo requerido').oneOf([Yup.ref('password')], 'Contraseñas no coinciden').min(6,'Contraseña muy corta. Mínimo 6 caracteres')
 });
 
 const shoeSizes = ['30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50']

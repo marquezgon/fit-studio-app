@@ -38,7 +38,12 @@ export default function Profile() {
     setCancelClassModal({ showModal: true, selectedClass })
   }
 
-  console.log(classesAndPackages)
+  const timeZone = "America/Mexico_City"
+  const currentDate = new Date(new Date().toLocaleString("en-US", {
+    timeZone,
+  })).toISOString()
+  
+  const date1 = DateTime.fromISO(currentDate)
 
   return (
     <div className="container mx-auto">
@@ -96,11 +101,13 @@ export default function Profile() {
                   <p className="text-xs md:text-base text-black uppercase text-center">{bookedClass.coach}</p>
                 </TableCell>
                 <TableCell>
-                  <Tooltip content="Cancelar Clase">
-                    <span className="cursor-pointer active:opacity-50" onClick={() => handleClick(bookedClass)}>
-                      <XCircle size={16} color='red' />
-                    </span>
-                  </Tooltip>   
+                  {DateTime.fromISO(bookedClass.date!).diff(date1, ["hours"]).hours >= 12 && (
+                    <Tooltip content="Cancelar Clase">
+                      <span className="cursor-pointer active:opacity-50" onClick={() => handleClick(bookedClass)}>
+                        <XCircle size={16} color='red' />
+                      </span>
+                    </Tooltip> 
+                  )}
                 </TableCell>
               </TableRow>
             ))}

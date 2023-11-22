@@ -18,7 +18,7 @@ export default function ClassCalendar(props: Props) {
           <div className="py-0.5 md:py-2" key={openClass.id}>
             <Link href={`/reserva/${props.page}/${openClass.id}`}>
               <Card className={`${openClass.type ===  EClassType.Special ? styles.bgYellow :  styles.bgLight} h-16 md:h-32`}>
-                <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
+                <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4 relative'>
                   {(openClass.type === EClassType.Yoga || openClass.type === EClassType.YogaKids || openClass.type === EClassType.Barre) ? (
                     <div>
                       <p className='text-[0.3rem] md:text-[0.6rem] uppercase'>{openClass.type}</p>
@@ -42,30 +42,8 @@ export default function ClassCalendar(props: Props) {
     )
   })
   return (
-    <div className="grid grid-cols-7 text-center gap-4 pt-6">
+    <div className="grid grid-cols-7 text-center gap-2 md:gap-4 pt-6 px-2 md:px-0">
       {renderClasses}
-        {/* <div>
-          
-          <Link href="/reserva/indoor-cycling/a12kj4kas8998">
-            <Card className={`${styles.clipCard} h-16 md:h-32`}>
-              <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
-                <p className='text-[0.6rem] md:text-base'>Orci</p>
-                <p className='text-[0.6rem] md:text-base'>7 am</p>
-                <p className='text-[0.6rem] md:text-base'>Ft. Beyonce</p>
-              </CardBody>
-            </Card>
-          </Link>
-        </div>
-        <div>
-          <Link href="/reserva/indoor-cycling/a12kj4kas8998">
-            <Card className={`${styles.clipCard} ${styles.bgLight} h-16 md:h-32`}>
-              <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4'>
-                <p className='text-[0.6rem] md:text-base'>Orci</p>
-                <p className='text-[0.6rem] md:text-base'>7 am</p>
-              </CardBody>
-            </Card>
-          </Link>
-        </div> */}
       </div>
   )
 }

@@ -39,3 +39,8 @@ export interface IBookedClass {
     bookedSeats: SpotStatus[]
   }
 }
+
+export interface ICancelClassModal {
+  showModal: boolean
+  selectedClass: IClassInfo | null
+}

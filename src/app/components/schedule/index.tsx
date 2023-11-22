@@ -78,7 +78,7 @@ export default function Schedule(props: { page: string }) {
             </Button>
         </div>
       </div>
-      <div className="grid grid-cols-7 text-center">
+      <div className="grid grid-cols-7 text-center px-2 md:px-0">
         {firstDay}
         {secondDay}
         {thirdDay}

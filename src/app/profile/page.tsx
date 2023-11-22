@@ -2,21 +2,21 @@
 'use client'
 
 import {useEffect, useState} from 'react'
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from '@nextui-org/react'
-import {User} from 'react-feather'
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip} from '@nextui-org/react'
+import {User, XCircle} from 'react-feather'
 import {useAppStore} from '@/app/store'
+import CancelClassModal from '@/app/components/cancel-class-modal'
 import {IClassInfo, IUserPackage} from '../types'
 import {DateTime} from 'luxon'
 
-interface IClassesAndPackages {
+export interface IClassesAndPackages {
   classes: IClassInfo[]
   userPackages: IUserPackage[]
 }
 
 export default function Profile() {
-  const {user} = useAppStore()
+  const {user, cancelClassModal, setCancelClassModal} = useAppStore()
   const [classesAndPackages, setClassesAndPackages] = useState<IClassesAndPackages>({ classes: [], userPackages: [] })
-
 
   useEffect(() => {
     if (user) {
@@ -25,17 +25,31 @@ export default function Profile() {
   
         if (response.ok) {
           const jsonRes: IClassesAndPackages = await response.json()
-          console.log(jsonRes)
           setClassesAndPackages(jsonRes)
         }
       };
   
       fetchPackagesAndClasses()
     }
+
   }, [user])
+
+  const handleClick = (selectedClass: IClassInfo) => {
+    setCancelClassModal({ showModal: true, selectedClass })
+  }
+
+  console.log(classesAndPackages)
 
   return (
     <div className="container mx-auto">
+      {cancelClassModal.showModal && (
+        <CancelClassModal
+          isOpen={cancelClassModal.showModal}
+          data={cancelClassModal}
+          classesAndPackages={classesAndPackages}
+          setClassesAndPackages={setClassesAndPackages}
+        />
+      )}
       <div className="hidden md:flex flex-col items-center pt-8 md:pt-12">
         <img
           src="/logo-black-2.png"
@@ -57,31 +71,36 @@ export default function Profile() {
         </p>
         <Table removeWrapper aria-label="Clases">
           <TableHeader>
-            <TableColumn>DISCIPLINE</TableColumn>
-            <TableColumn>SPOT</TableColumn>
-            <TableColumn>DATE</TableColumn>
-            <TableColumn>TIME</TableColumn>
-            <TableColumn>COACH</TableColumn>
+            <TableColumn align='center' width={20}><p className='text-center'>DISCIPLINE</p></TableColumn>
+            <TableColumn align='center' width={10}><p className='text-center'>SPOT</p></TableColumn>
+            <TableColumn align='center' width={100}><p className='text-center'>DATE</p></TableColumn>
+            <TableColumn align='center' width={20}><p className='text-center'>COACH</p></TableColumn>
+            <TableColumn align='center' width={10}>{''}</TableColumn>
           </TableHeader>
           <TableBody>
             {classesAndPackages.classes.map((bookedClass) => (
-              <TableRow key={bookedClass.id}>
+              <TableRow key={`${bookedClass.id}=${bookedClass.seat}`}>
                 <TableCell>
-                  <p className='text-xs md:text-base text-black'>{bookedClass.type === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'}</p>
+                  <p className='text-xs md:text-base text-black text-center'>{bookedClass.type === 'indoor-cycling' ? 'Indoor Cycling' : 'Move'}</p>
                 </TableCell>
                 <TableCell>
-                  <p className='text-xs md:text-base text-black'>{bookedClass.seat}</p>
+                  <p className='text-xs md:text-base text-black text-center'>{bookedClass.seat}</p>
                 </TableCell>
                 <TableCell>
-                  <p className="text-xs md:text-base text-black">
+                  <p className="text-xs md:text-base text-black text-center">
                     {DateTime.fromISO(bookedClass.date!).setLocale('es').toFormat("EEE d / LLL / yy")}
                   </p>
+                  <p className="text-xs md:text-base text-black text-center">{DateTime.fromISO(bookedClass.date!).toFormat("t")}</p>
                 </TableCell>
                 <TableCell>
-                  <p className="text-xs md:text-base text-black">{DateTime.fromISO(bookedClass.date!).toFormat("t")}</p>
+                  <p className="text-xs md:text-base text-black uppercase text-center">{bookedClass.coach}</p>
                 </TableCell>
                 <TableCell>
-                  <p className="text-xs md:text-base text-black uppercase">{bookedClass.coach}</p>
+                  <Tooltip content="Cancelar Clase">
+                    <span className="cursor-pointer active:opacity-50" onClick={() => handleClick(bookedClass)}>
+                      <XCircle size={16} color='red' />
+                    </span>
+                  </Tooltip>   
                 </TableCell>
               </TableRow>
             ))}

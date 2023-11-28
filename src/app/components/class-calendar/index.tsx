@@ -27,7 +27,7 @@ export default function ClassCalendar(props: Props) {
                   ): (
                     <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>
                   )} 
-                  {openClass.type === EClassType.Special && (
+                  {openClass.description && (
                     <p className='text-[0.4rem] md:text-sm'>{openClass.description}</p>
                   )}
                   <p className='text-[0.5rem] md:text-base uppercase'>

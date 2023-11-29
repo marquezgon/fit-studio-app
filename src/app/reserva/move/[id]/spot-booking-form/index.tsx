@@ -101,45 +101,48 @@ export default function SpotBookingForm(props: Props) {
       toggleModal(ModalType.SIGN_IN)
     } else if (user && userPackages.length > 0) {
       setIsSubmitting(true)
-      const packageToUse = userPackages[0]
+      const packageToUse = userPackages.find((item) => item.amount > 0)
       const seat = bookingItems.findIndex(item => item === SpotStatus.SELECTED) + 1
-
-      try {
-        const body = {
-          userId: user.id,
-          sessionId: packageToUse.package_id,
-          seat: seat,
-          type: 'move',
-          date: props.data.classInfo.date,
-          coach: props.data.classInfo.coach
-        }
-
-        const response = await fetch(`/api/move/reservar-clase/${params.id}`, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-        })
-        if (response.ok) {
-          const index = bookingItems.findIndex((item) => item === SpotStatus.SELECTED)
-          const newItems = bookingItems.map((item, i) => {
-            if (i === index) {
-              if (item === SpotStatus.SELECTED) {
-                item = SpotStatus.RESERVED
-              } else {
-                item = SpotStatus.AVAILABLE
-              }
-            }
-      
-            return item
+      if (packageToUse) {
+        try {
+          const body = {
+            userId: user.id,
+            sessionId: packageToUse.package_id,
+            seat: seat,
+            type: 'move',
+            date: props.data.classInfo.date,
+            coach: props.data.classInfo.coach
+          }
+  
+          const response = await fetch(`/api/move/reservar-clase/${params.id}`, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
           })
-
-          setClass(params.id as string, newItems)
-          router.replace('/clase-reservada')
+          if (response.ok) {
+            const index = bookingItems.findIndex((item) => item === SpotStatus.SELECTED)
+            const newItems = bookingItems.map((item, i) => {
+              if (i === index) {
+                if (item === SpotStatus.SELECTED) {
+                  item = SpotStatus.RESERVED
+                } else {
+                  item = SpotStatus.AVAILABLE
+                }
+              }
+        
+              return item
+            })
+  
+            setClass(params.id as string, newItems)
+            router.replace('/clase-reservada')
+          }
+        } catch(e) {
+          setIsSubmitting(false)
         }
-      } catch(e) {
+      } else {
         setIsSubmitting(false)
       }
     } else if (user && userPackages.length === 0) {

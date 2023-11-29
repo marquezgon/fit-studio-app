@@ -55,17 +55,17 @@ export default function Profile() {
           setClassesAndPackages={setClassesAndPackages}
         />
       )}
-      <div className="hidden md:flex flex-col items-center pt-8 md:pt-12">
+      <div className="flex flex-col items-center pt-8 md:pt-12">
         <img
           src="/logo-black-2.png"
           alt="Zeal Studio Logo"
           width={200}
         />
-        <div className="w-3/4 lg:w-3/5 text-center pt-8">
-          <h3 className='te text-sm font-[200]'>
+        <div className="text-center pt-8 px-2">
+          <h3 className='text-xs font-[200]'>
             MOTIVATION IS WHAT GETS YOU STARTED, COMMITMENT IS WHAT KEEPS YOU GOING.
           </h3>
-          <h3 className='text-sm font-[200]'>
+          <h3 className='text-xs md:text-sm font-[300] pt-2'>
             RECUERDA QUE CUALQUIER CANCELACION DEBERA HACERSE 12 HRS ANTES DE LA CLASE.
           </h3>
         </div>

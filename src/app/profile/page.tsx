@@ -62,7 +62,7 @@ export default function Profile() {
           width={200}
         />
         <div className="text-center pt-8 px-2">
-          <h3 className='text-xs font-[200]'>
+          <h3 className='text-xs md:text-sm font-[200]'>
             MOTIVATION IS WHAT GETS YOU STARTED, COMMITMENT IS WHAT KEEPS YOU GOING.
           </h3>
           <h3 className='text-xs md:text-sm font-[300] pt-2'>

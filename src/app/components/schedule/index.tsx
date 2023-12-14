@@ -3,16 +3,20 @@
 import {useState, useEffect} from 'react'
 import {DateTime} from 'luxon'
 import {Button} from '@nextui-org/button'
-import ClassCalendar from '../../components/class-calendar'
 import _ from 'lodash'
 import {IClass, IClassSorted} from '@/app/types'
 import styles from './style.module.css'
+import useAdmin from '@/app/hooks/useAdmin'
+import { useAppStore } from '@/app/store'
+import ClassCalendar from '../../components/class-calendar'
 
 export default function Schedule(props: { page: string }) {
+  const {user} = useAppStore()
+  const {isAdmin} = useAdmin(user)
   const [timeframe, setTimeframe] = useState(0)
   const [classes, setClasses] = useState<IClassSorted>({})
 
-  const firstDayDate = timeframe === 0 ? DateTime.now().setLocale('es') : DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
+  const firstDayDate = (timeframe === 0 && !isAdmin) ? DateTime.now().setLocale('es') : DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
   const secondDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 1 }).setLocale('es')
   const thirdDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 2 }).setLocale('es')
   const fourthDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 3 }).setLocale('es')
@@ -37,7 +41,7 @@ export default function Schedule(props: { page: string }) {
     };
 
     fetchClasses();
-  }, [timeframe])
+  }, [timeframe, firstDayDate])
 
   const firstDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{firstDayDate.toFormat('EEE dd MMM')}</p>
   const secondDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{secondDayDate.toFormat('EEE dd MMM')}</p>

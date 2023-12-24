@@ -19,7 +19,7 @@ export default function ClassCalendar(props: Props) {
             <Link href={`/reserva/${props.page}/${openClass.id}`}>
               <Card className={`${openClass.type ===  EClassType.Special ? styles.bgYellow :  styles.bgLight} h-16 md:h-32`}>
                 <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4 relative'>
-                  {(openClass.type === EClassType.Yoga || openClass.type === EClassType.YogaKids || openClass.type === EClassType.Barre) ? (
+                  {(openClass.type === EClassType.Yoga || openClass.type === EClassType.CardioDance || openClass.type === EClassType.Barre) ? (
                     <div>
                       <p className='text-[0.3rem] md:text-[0.6rem] uppercase'>{openClass.type}</p>
                       <p className='text-[0.5rem] md:text-base'>{openClass.coach}</p>

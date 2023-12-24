@@ -32,6 +32,7 @@ export enum EClassType {
   Barre = 'BARRE',
   Yoga = 'YOGA',
   YogaKids = 'YOGA KIDS',
+  CardioDance = 'CARDIO DANCE'
 }
 
 export interface IBookedClass {

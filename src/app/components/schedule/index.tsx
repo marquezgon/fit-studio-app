@@ -16,7 +16,7 @@ export default function Schedule(props: { page: string }) {
   const [timeframe, setTimeframe] = useState(0)
   const [classes, setClasses] = useState<IClassSorted>({})
 
-  const firstDayDate = (timeframe === 0 && !isAdmin) ? DateTime.now().setLocale('es') : DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
+  const firstDayDate = (timeframe === 0 && !isAdmin) ? DateTime.now().startOf('hour').setLocale('es') : DateTime.now().startOf('day').plus({ days: timeframe }).setLocale('es')
   const secondDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 1 }).setLocale('es')
   const thirdDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 2 }).setLocale('es')
   const fourthDayDate = DateTime.now().startOf('day').plus({ days: timeframe + 3 }).setLocale('es')
@@ -27,6 +27,7 @@ export default function Schedule(props: { page: string }) {
   const weekDays = [firstDayDate, secondDayDate, thirdDayDate, fourthDayDate, fifthDayDate, sixthDayDate, seventhDayDate]
 
   useEffect(() => {
+    console.log(firstDayDate)
     const fetchClasses = async () => {
       const startDate = firstDayDate.toISO()
       const endDate = seventhDayDate.endOf('day').toISO()
@@ -41,7 +42,7 @@ export default function Schedule(props: { page: string }) {
     };
 
     fetchClasses();
-  }, [timeframe, firstDayDate])
+  }, [timeframe])
 
   const firstDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{firstDayDate.toFormat('EEE dd MMM')}</p>
   const secondDay = <p className='uppercase text-[0.8rem] md:text-base text-black'>{secondDayDate.toFormat('EEE dd MMM')}</p>

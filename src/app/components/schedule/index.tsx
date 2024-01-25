@@ -1,6 +1,6 @@
 'use client'
 
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useMemo} from 'react'
 import {DateTime} from 'luxon'
 import {Button} from '@nextui-org/button'
 import _ from 'lodash'
@@ -27,7 +27,6 @@ export default function Schedule(props: { page: string }) {
   const weekDays = [firstDayDate, secondDayDate, thirdDayDate, fourthDayDate, fifthDayDate, sixthDayDate, seventhDayDate]
 
   useEffect(() => {
-    console.log(firstDayDate)
     const fetchClasses = async () => {
       const startDate = firstDayDate.toISO()
       const endDate = seventhDayDate.endOf('day').toISO()

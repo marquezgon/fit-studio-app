@@ -1,5 +1,6 @@
 import {CognitoUser, IClassInfo} from "@/app/types"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@nextui-org/react"
+import {DateTime} from 'luxon'
 
 interface Props {
   cognitoUsers: CognitoUser[]
@@ -8,6 +9,7 @@ interface Props {
 
 export default function UserTable(props: Props) {
   const { cognitoUsers, seatsInfo } = props
+  console.log(cognitoUsers)
   let mutableSeatsInfo = [...seatsInfo]
   const renderUsers = cognitoUsers.map(({user}) => {
     const userId = user.find((info) => info.Name === 'sub')?.Value
@@ -15,10 +17,11 @@ export default function UserTable(props: Props) {
     const lastName = user.find((info) => info.Name === 'family_name')?.Value
     const size = user.find((info) => info.Name === 'custom:Size')?.Value
     const phone = user.find((info) => info.Name === 'phone_number')?.Value
+    const birthdate = user.find((info) => info.Name === 'birthdate')?.Value
     const seat = mutableSeatsInfo.find(seatInfo => seatInfo.userId === userId)?.seat
     mutableSeatsInfo = mutableSeatsInfo.filter(seatInfo => seatInfo.seat !== seat)
-
-    return { firstName, lastName, size, phone, seat, userId }
+    console.log(birthdate)
+    return { firstName, lastName, size, phone, seat, userId, birthdate }
   })
 
   return (
@@ -28,6 +31,7 @@ export default function UserTable(props: Props) {
         <TableColumn>PHONE</TableColumn>
         <TableColumn>SEAT</TableColumn>
         <TableColumn>SIZE</TableColumn>
+        <TableColumn>BIRTHDAY</TableColumn>
       </TableHeader>
       <TableBody>
         {renderUsers.map((selUser) => (
@@ -50,6 +54,11 @@ export default function UserTable(props: Props) {
             <TableCell>
               <p className="text-xs md:text-base text-black">
                 {selUser.size}
+              </p>
+            </TableCell>
+            <TableCell>
+              <p className="text-xs md:text-base text-black">
+                {DateTime.fromISO(new Date(selUser.birthdate!).toISOString()).setLocale('es').toFormat("LLLL d")}
               </p>
             </TableCell>
           </TableRow>

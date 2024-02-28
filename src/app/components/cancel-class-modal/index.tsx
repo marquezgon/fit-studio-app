@@ -20,7 +20,7 @@ export default function CancelClassModal(props: CancelClassModalProps) {
 
   const handleClick = async () => {
     const {seat, id} = props.data.selectedClass!
-    
+    console.log(props.classesAndPackages.userPackages)
     if (props.classesAndPackages.userPackages.length > 0) {
       setLoading(true)
       const userId = props.classesAndPackages.userPackages[0].user_id

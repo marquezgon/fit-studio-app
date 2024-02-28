@@ -12,13 +12,13 @@ interface Props {
 
 export default function ClassCalendar(props: Props) {
   const renderClasses = props.dates.map((item: DateTime) => {
-    console.log()
+
     return (
       <div key={item.toISO()}>
         {props.classes[item.toFormat('dd')]?.map((openClass: IClass) =>  (
           <div className="py-0.5 md:py-2" key={openClass.id}>
             <Link href={`/reserva/${props.page}/${openClass.id}`}>
-              <Card className={`${(openClass.type ===  EClassType.Special || openClass.category  ===  EClassType.Special) ? styles.bgYellow :  styles.bgLight} h-16 md:h-32`}>
+              <Card className={`${(DateTime.fromISO(openClass.date).toFormat("MM/dd") === '03/08') ? styles.bgLila : (openClass.type ===  EClassType.Special || openClass.category  ===  EClassType.Special) ? styles.bgYellow : styles.bgLight} h-16 md:h-32`}>
                 <CardBody className='text-center flex flex-column justify-around py-2 px-1 md:p-4 relative'>
                   {(openClass.type === EClassType.Yoga || openClass.type === EClassType.CardioDance || openClass.type === EClassType.Barre) ? (
                     <div>

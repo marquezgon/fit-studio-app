@@ -16,7 +16,11 @@
   background-color: #F7D26E;
 }
 
-.bgYellow:hover, .bgLight:hover {
+.bgLila {
+  border: 2px solid #D29BFD;
+}
+
+.bgYellow:hover, .bgLight:hover, .bgLila:hover {
   background-color: #232321;
   color: white;
 }

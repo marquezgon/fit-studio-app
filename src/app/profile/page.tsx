@@ -25,6 +25,7 @@ export default function Profile() {
   
         if (response.ok) {
           const jsonRes: IClassesAndPackages = await response.json()
+          console.log(jsonRes)
           setClassesAndPackages(jsonRes)
         }
       };
